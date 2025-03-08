@@ -1,0 +1,19 @@
+# Ignorar node_modules (carpeta pesada)
+node_modules/
+
+# Ignorar archivos de entorno (contienen datos sensibles)
+.env
+
+# Ignorar PDFs generados
+generated_pdf/
+
+# Ignorar logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar archivos del sistema (Mac y Windows)
+.DS_Store
+Thumbs.db

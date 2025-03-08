@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    style.
+      table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+  body
+    h3(style="text-align: center;") Cafe Management System
+
+    table
+      tr
+        th Name: #{name}
+        th Email: #{email}
+      tr
+        th Contact Number: #{contactNumber}
+        th Payment Method: #{paymentMethod}
+
+    h3 Product Details:
+    table
+      tr
+        th Name
+        th Category
+        th Quantity
+        th Price
+        th Sub Total
+      each product in productDetails
+        tr
+          td #{product.name}
+          td #{product.category}
+          td #{product.quantity}
+          td #{product.price}
+          td #{product.total}
+
+    h3 Total: #{totalAmount}
+    h3 Thank you for visiting. Please visit again!!
