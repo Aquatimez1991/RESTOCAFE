@@ -13,44 +13,15 @@ import { SharedModule } from './shared/shared.module';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SignupComponent } from './signup/signup.component';
-import {
-  NgxUiLoaderConfig,
-  NgxUiLoaderModule,
-  PB_DIRECTION,
-  SPINNER,
-} from 'ngx-ui-loader';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { LoginComponent } from './login/login.component';
-import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
-import { AccordionLinkDirective } from './shared/accordion';
-
-const ngx_ui_loader_config: NgxUiLoaderConfig = {
-  text: 'Loading...',
-  textColor: '#FFFFFF',
-  textPosition: 'center-center',
-  pbColor: 'red',
-  bgsColor: 'red',
-  fgsColor: 'red',
-  fgsType: SPINNER.chasingDots,
-  fgsSize: 100,
-  pbDirection: PB_DIRECTION.leftToRight,
-  pbThickness: 5,
-};
-
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     HomeComponent,
     BestSellerComponent,
     FullComponent,
     AppHeaderComponent,
-    AppSidebarComponent,
-    SignupComponent,
-    ForgotPasswordComponent,
-    LoginComponent,
-  ],
+    AppSidebarComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -59,19 +30,9 @@ const ngx_ui_loader_config: NgxUiLoaderConfig = {
     ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule,
-    SharedModule,
-    HttpClientModule,
-    NgxUiLoaderModule.forRoot(ngx_ui_loader_config),
+    SharedModule
   ],
-  providers: [
-    HttpClientModule,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptorInterceptor,
-      multi: true,
-    },
-    AccordionLinkDirective
-  ],
-  bootstrap: [AppComponent],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
