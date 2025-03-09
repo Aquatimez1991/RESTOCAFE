@@ -1,35 +1,35 @@
 <section class="page-section" id="about">
-    <div class="container">
-      <div class="text-center">
-        <h2 class="section-heading text-uppercase">Best Seller</h2>
-      </div>
-      <ul class="timeline">
-        <li *ngFor="let item of bestSellers; let i = index" [ngClass]="{ 'timeline-inverted': i % 2 !== 0 }">
-          <a [href]="item.image" target="_blank">
-            <div class="timeline-image">
-              <img class="rounded-circle img-fluid" [src]="item.image" [alt]="item.name" />
-            </div>
-          </a>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4>{{ item.name }}</h4>
-            </div>
-            <div class="timeline-body">
-              <p class="text-muted">{{ item.description }}</p>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-inverted">
-          <div class="timeline-image">
-            <h4>
-              Be Part
-              <br />
-              Of Our
-              <br />
-              Cafe!
-            </h4>
-          </div>
-        </li>
-      </ul>
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-heading text-uppercase">Best Seller</h2>
     </div>
-  </section>
+    <ul class="timeline">
+      <li *ngFor="let item of bestSellers; let i = index" [ngClass]="{ 'timeline-inverted': i % 2 !== 0 }">
+        <a [href]="item.image" target="_blank">
+          <div class="timeline-image">
+            <img class="rounded-circle img-fluid" [src]="item.image" [alt]="item.name" />
+          </div>
+        </a>
+        <div class="timeline-panel">
+          <div class="timeline-heading">
+            <h4>{{ item.name }}</h4>
+          </div>
+          <div class="timeline-body">
+            <p class="text-muted">{{ item.description }}</p>
+          </div>
+        </div>
+      </li>
+      <li class="timeline-inverted">
+        <div class="timeline-image">
+          <h4>
+            Be Part
+            <br />
+            Of Our
+            <br />
+            Cafe!
+          </h4>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

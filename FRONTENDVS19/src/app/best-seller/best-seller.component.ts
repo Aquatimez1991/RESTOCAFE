@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
-
-interface BestSellerItem {
-  name: string;
-  description: string;
-  image: string;
-}
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-best-seller',
   templateUrl: './best-seller.component.html',
-  styleUrls: ['./best-seller.component.scss']
+  styleUrls: ['./best-seller.component.scss'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class BestSellerComponent {
-  bestSellers: BestSellerItem[] = [
+  bestSellers = [
     {
       name: 'Pizza',
       description: 'Pizza is an Italian dish consisting of a usually round...',

@@ -1,1 +1,37 @@
-<p>full works!</p>
+<div class="main-container">
+    <mat-toolbar color="primary" class="topbar relative">
+        <div class="navbar-header">
+            <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed" style="vertical-align: bottom;">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <b>
+                <span style="vertical-align: middle;">
+                    <mat-icon>storefront</mat-icon>
+                </span>
+            </b>
+            <span *ngIf="!isMobile">Cafe Management System</span>
+        </div>
+
+        <!-- Reemplazo de fxFlex -->
+        <div class="spacer"></div>
+
+        <app-header></app-header>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container">
+        <mat-sidenav 
+            #snav id="snav" class="dark-sidebar pl-xs" 
+            [mode]="isMobile ? 'over' : 'side'"
+            fixedTopGap="0" 
+            [opened]="!isMobile"
+            [disableClose]="!isMobile">
+            <app-sidebar></app-sidebar>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="page-wrapper">
+            <div class="page-content">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
