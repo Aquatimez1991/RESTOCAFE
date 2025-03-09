@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from './accordion';
-import { MenuItems } from './menu-items';
 
 
 @NgModule({
@@ -15,6 +14,6 @@ import { MenuItems } from './menu-items';
     AccordionLinkDirective,
     AccordionDirective
    ],
-  providers: [MenuItems]
+  providers: [ ]
 })
 export class SharedModule { }
