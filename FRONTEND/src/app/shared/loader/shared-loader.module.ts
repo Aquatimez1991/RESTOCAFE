@@ -12,8 +12,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   hasProgressBar: false,
 };
 
-console .log( 'SharedLoaderModule cargado...' );
-
 @NgModule({
   imports: [NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)],
   exports: [NgxUiLoaderModule], 
