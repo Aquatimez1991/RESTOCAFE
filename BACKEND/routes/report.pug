@@ -2,26 +2,44 @@ doctype html
 html
   head
     style.
-      table {
+      body {
         font-family: Arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
+        margin: 20px;
+        padding: 20px;
       }
-      td, th {
+      h3 {
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      th, td {
         border: 1px solid #dddddd;
         text-align: left;
-        padding: 8px;
+        padding: 10px;
       }
+      th {
+        background-color: #f2f2f2;
+      }
+      .total {
+        font-weight: bold;
+        text-align: right;
+      }
+
   body
-    h3(style="text-align: center;") Cafe Management System
+    h3 Café Management System
 
     table
       tr
-        th Name: #{name}
-        th Email: #{email}
+        th(colspan="2") Customer Details
       tr
-        th Contact Number: #{contactNumber}
-        th Payment Method: #{paymentMethod}
+        td Name: #{name}
+        td Email: #{email}
+      tr
+        td Contact Number: #{contactNumber}
+        td Payment Method: #{paymentMethod}
 
     h3 Product Details:
     table
@@ -36,8 +54,12 @@ html
           td #{product.name}
           td #{product.category}
           td #{product.quantity}
-          td #{product.price}
-          td #{product.total}
+          td $#{product.price.toFixed(2)}
+          td $#{product.total.toFixed(2)}
 
-    h3 Total: #{totalAmount}
-    h3 Thank you for visiting. Please visit again!!
+    table
+      tr
+        td.total(colspan="4") Total:
+        td.total $#{totalAmount.toFixed(2)}
+
+    h3 Gracias por su visita. Vuelva pronto.!

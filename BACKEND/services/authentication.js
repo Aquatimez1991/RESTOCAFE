@@ -1,8 +1,9 @@
-import dotenv from "dotenv";
+import dotenv from "dotenv-safe";
 import jwt from "jsonwebtoken";
 
 dotenv.config();
 
+// 📌 Autenticar el token de acceso
 function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -20,7 +21,7 @@ function authenticateToken(req, res, next) {
             return res.status(403).json({ message: "Token inválido o expirado" });
         }
 
-        res.locals.user = decoded; // Guardamos el usuario en un objeto específico
+        res.locals.user = decoded; 
         next();
     });
 }

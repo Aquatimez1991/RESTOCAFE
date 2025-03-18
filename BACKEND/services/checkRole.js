@@ -1,9 +1,10 @@
-import dotenv from "dotenv";
+import dotenv from "dotenv-safe";
 
 dotenv.config();
 
+// 📌 Verificar el rol del usuario
 function checkRole(req, res, next) {
-  const userRole = res.locals.user?.role; // Acceder correctamente al rol del usuario
+  const userRole = res.locals.user?.role;
 
   if (!userRole) {
     return res.status(403).json({ message: "Acceso denegado: rol no definido" });

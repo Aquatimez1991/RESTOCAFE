@@ -1,5 +1,5 @@
 import express from "express";
-import pool from "../connection.js"; // Asegúrate de usar la extensión .js
+import pool from "../connection.js"; 
 import { authenticateToken } from "../services/authentication.js";
 
 const router = express.Router();

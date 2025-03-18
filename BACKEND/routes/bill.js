@@ -1,5 +1,5 @@
 import express from "express";
-import pool from "../connection.js"; // Asegúrate de usar la extensión .js
+import pool from "../connection.js"; 
 import pug from "pug";
 import puppeteer from "puppeteer";
 import path from "path";

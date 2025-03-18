@@ -1,5 +1,5 @@
 import express from "express";
-import pool from "../connection.js"; // Pool de conexiones con extensión .js
+import pool from "../connection.js"; 
 import { authenticateToken } from "../services/authentication.js";
 import { checkRole } from "../services/checkRole.js";
 import Joi from "joi";

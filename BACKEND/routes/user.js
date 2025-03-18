@@ -1,11 +1,11 @@
 import express from "express";
-import pool from "../connection.js"; // USAMOS POOL
+import pool from "../connection.js"; 
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
-import dotenv from "dotenv";
-import crypto from "crypto"; // Necesario para generar el token
+import dotenv from "dotenv-safe";
+import crypto from "crypto"; 
 import { authenticateToken } from "../services/authentication.js";
 import { checkRole } from "../services/checkRole.js";
 
@@ -13,9 +13,9 @@ dotenv.config();
 
 const router = express.Router();
 const OAuth2 = google.auth.OAuth2;
-const saltRounds = 10; // Definir las rondas de encriptación
+const saltRounds = 10; // 📌 Definir las rondas de encriptación
 
-//  Configurar OAuth2
+// 📌 Configurar OAuth2
 const oauth2Client = new OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
@@ -26,7 +26,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN,
 });
 
-//  Crear un transportador de correo con OAuth2
+// 📌 Crear un transportador de correo con OAuth2
 async function createTransporter() {
   const accessToken = await oauth2Client.getAccessToken();
 
@@ -43,7 +43,7 @@ async function createTransporter() {
   });
 }
 
-//  Registro de usuarios
+// 📌 Registro de usuarios
 router.post("/signup", async (req, res) => {
   let user = req.body;
   let query = "SELECT email FROM user WHERE email=?";
@@ -65,7 +65,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-//  Inicio de sesión
+// 📌 Inicio de sesión
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   let query = "SELECT email, password, role, status FROM user WHERE email=?";
@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//  Recuperación de contraseña
+// 📌 Recuperación de contraseña
 router.post("/forgotPassword", async (req, res) => {
   const { email } = req.body;
   let query = "SELECT email FROM user WHERE email=?";
@@ -142,7 +142,7 @@ router.post("/forgotPassword", async (req, res) => {
   }
 });
 
-//  Restablecimiento de contraseña
+// 📌 Restablecimiento de contraseña
 router.post("/resetPassword", async (req, res) => {
   const { token, newPassword } = req.body;
   let query = "SELECT email FROM user WHERE reset_token=?";
@@ -166,7 +166,7 @@ router.post("/resetPassword", async (req, res) => {
   }
 });
 
-// Ruta para obtener todos los usuarios con rol "user"
+// 📌 Ruta para obtener todos los usuarios con rol "user"
 router.get("/get", authenticateToken, checkRole, async (req, res) => {
   let query = "SELECT id, name, email, contactNumber, status FROM user WHERE role='user'";
 
@@ -178,7 +178,7 @@ router.get("/get", authenticateToken, checkRole, async (req, res) => {
   }
 });
 
-// Ruta para actualizar el estado de un usuario por su ID
+// 📌 Ruta para actualizar el estado de un usuario por su ID
 router.patch("/update", authenticateToken, checkRole, async (req, res) => {
   let { status, id } = req.body;
   let query = "UPDATE user SET status=? WHERE id=?";
@@ -194,12 +194,12 @@ router.patch("/update", authenticateToken, checkRole, async (req, res) => {
   }
 });
 
-// Ruta para verificar si el token es válido
+// 📌 Ruta para verificar si el token es válido
 router.get("/checkToken", authenticateToken, (req, res) => {
   return res.status(200).json({ message: "true" });
 });
 
-// Ruta para cambiar la contraseña de un usuario
+// 📌 Ruta para cambiar la contraseña de un usuario
 router.post("/changePassword", authenticateToken, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   const email = res.locals.email;
