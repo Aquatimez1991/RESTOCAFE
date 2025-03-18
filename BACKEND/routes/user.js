@@ -1,15 +1,19 @@
-const express = require("express");
-const connection = require("../connection");
+import express from "express";
+import pool from "../connection.js"; // USAMOS POOL
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import { google } from "googleapis";
+import dotenv from "dotenv";
+import crypto from "crypto"; // Necesario para generar el token
+import { authenticateToken } from "../services/authentication.js";
+import { checkRole } from "../services/checkRole.js";
+
+dotenv.config();
+
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-require("dotenv").config();
-
-var auth = require("../services/authentication");
-var checkRole = require("../services/checkRole");
-
 const OAuth2 = google.auth.OAuth2;
+const saltRounds = 10; // Definir las rondas de encriptación
 
 //  Configurar OAuth2
 const oauth2Client = new OAuth2(
@@ -22,7 +26,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN,
 });
 
-//  Función para crear un transportador de correo
+//  Crear un transportador de correo con OAuth2
 async function createTransporter() {
   const accessToken = await oauth2Client.getAccessToken();
 
@@ -40,171 +44,188 @@ async function createTransporter() {
 }
 
 //  Registro de usuarios
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
   let user = req.body;
   let query = "SELECT email FROM user WHERE email=?";
-
-  connection.query(query, [user.email], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-
+  
+  try {
+    const [results] = await pool.query(query, [user.email]);
     if (results.length > 0) {
       return res.status(400).json({ message: "El correo ya está registrado." });
     }
 
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
     query =
       "INSERT INTO user(name, contactNumber, email, password, status, role) VALUES (?, ?, ?, ?, 'false', 'user')";
-    connection.query(
-      query,
-      [user.name, user.contactNumber, user.email, user.password],
-      (err, results) => {
-        if (err) return res.status(500).json({ error: err });
-        return res.status(201).json({ message: "Registro exitoso." });
-      }
-    );
-  });
+    
+    await pool.query(query, [user.name, user.contactNumber, user.email, hashedPassword]);
+    return res.status(201).json({ message: "Registro exitoso." });
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
 });
 
 //  Inicio de sesión
-router.post("/login", (req, res) => {
-  const user = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
   let query = "SELECT email, password, role, status FROM user WHERE email=?";
 
-  connection.query(query, [user.email], (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-
-    if (results.length === 0 || results[0].password !== user.password) {
-      return res
-        .status(401)
-        .json({ message: "Usuario o contraseña incorrectos." });
+  try {
+    const [results] = await pool.query(query, [email]);
+    if (results.length === 0) {
+      return res.status(401).json({ message: "Usuario o contraseña incorrectos." });
     }
 
-    if (results[0].status === "false") {
-      return res
-        .status(403)
-        .json({ message: "Espera la aprobación del administrador." });
+    const user = results[0];
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ message: "Usuario o contraseña incorrectos." });
     }
 
-    //  Generar token JWT correctamente
-    const payload = { email: results[0].email, role: results[0].role };
+    if (user.status === "false") {
+      return res.status(403).json({ message: "Espera la aprobación del administrador." });
+    }
+
+    const payload = { email: user.email, role: user.role };
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "8h",
     });
 
     res.status(200).json({ token: accessToken });
-  });
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
 });
 
 //  Recuperación de contraseña
 router.post("/forgotPassword", async (req, res) => {
   const { email } = req.body;
-  let query = "SELECT email, password FROM user WHERE email=?";
+  let query = "SELECT email FROM user WHERE email=?";
 
-  connection.query(query, [email], async (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-
+  try {
+    const [results] = await pool.query(query, [email]);
     if (results.length === 0) {
       return res.status(404).json({ message: "Correo no encontrado." });
     }
 
-    const user = results[0];
+    // Generar un token seguro de 32 caracteres
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
+    // Guardar el token en la base de datos
+    query = "UPDATE user SET reset_token=? WHERE email=?";
+    await pool.query(query, [resetToken, email]);
+
+    // Enlace de restablecimiento de contraseña
+    const resetLink = `http://localhost:4200/reset-password?token=${resetToken}`;
+
+    // Contenido del correo
     const mailContent = `
-      <p><b>Detalles de acceso a Cafe Management System</b></p>
-      <p><b>Email:</b> ${user.email}</p>
-      <p><b>Contraseña:</b> ${user.password}</p>
-      <a href="http://localhost:4200">Haz clic aquí para iniciar sesión</a>
+      <p><b>Solicitud de recuperación de contraseña</b></p>
+      <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+      <a href="${resetLink}">Restablecer contraseña</a>
+      <p>Si no solicitaste este cambio, ignora este mensaje.</p>
     `;
 
-    try {
-      const transporter = await createTransporter();
-      await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: user.email,
-        subject: "Recuperación de contraseña",
-        html: mailContent,
-      });
+    // Enviar correo
+    const transporter = await createTransporter();
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Recuperación de contraseña",
+      html: mailContent,
+    });
 
-      return res.status(200).json({ message: "Correo enviado exitosamente." });
-    } catch (error) {
-      console.error("Error enviando correo:", error);
-      return res.status(500).json({ message: "Error al enviar el correo." });
+    return res.status(200).json({ message: "Correo enviado con éxito." });
+  } catch (error) {
+    console.error("Error en forgotPassword:", error);
+    return res.status(500).json({ message: "Error al enviar el correo." });
+  }
+});
+
+//  Restablecimiento de contraseña
+router.post("/resetPassword", async (req, res) => {
+  const { token, newPassword } = req.body;
+  let query = "SELECT email FROM user WHERE reset_token=?";
+
+  try {
+    const [results] = await pool.query(query, [token]);
+    if (results.length === 0) {
+      return res.status(400).json({ message: "Token inválido o expirado." });
     }
-  });
-});
 
-//  Manejo de errores globales
-process.on("uncaughtException", (err) => {
-  console.error("Excepción no controlada:", err);
-});
+    const email = results[0].email;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-process.on("unhandledRejection", (reason, promise) => {
-  console.error("Promesa rechazada sin manejar:", promise, "Razón:", reason);
+    // Actualizar la contraseña y eliminar el token
+    query = "UPDATE user SET password=?, reset_token=NULL WHERE email=?";
+    await pool.query(query, [hashedPassword, email]);
+
+    return res.status(200).json({ message: "Contraseña actualizada correctamente." });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
 // Ruta para obtener todos los usuarios con rol "user"
-router.get("/get", auth.authenticateToken, checkRole.checkRole, (req, res) => {
-  var query =
-    "select id,name,email,contactNumber,status from user where role='user'";
-  connection.query(query, (err, results) => {
-    if (!err) {
-      return res.status(200).json(results);
-    } else {
-      return res.status(500).json(err);
-    }
-  });
-});
-// Ruta para actualizar el estado de un usuario por su ID
-router.patch(
-  "/update",
-  auth.authenticateToken,
-  checkRole.checkRole,
-  (req, res) => {
-    let user = req.body;
-    var query = "update user set status=? where id=?";
-    connection.query(query, [user.status, user.id], (err, results) => {
-      if (!err) {
-        if (results.affectedRows == 0) {
-          return res.status(404).json({ message: "User id does not exist" });
-        }
-        return res.status(200).json({ message: "User Updated Successfully" });
-      } else {
-        return res.status(500).json(err);
-      }
-    });
+router.get("/get", authenticateToken, checkRole, async (req, res) => {
+  let query = "SELECT id, name, email, contactNumber, status FROM user WHERE role='user'";
+
+  try {
+    const [results] = await pool.query(query);
+    return res.status(200).json(results);
+  } catch (err) {
+    return res.status(500).json(err);
   }
-);
-// Ruta para verificar si el token es válido (simplemente responde con "true")
-router.get("/checkToken", auth.authenticateToken, (req, res) => {
+});
+
+// Ruta para actualizar el estado de un usuario por su ID
+router.patch("/update", authenticateToken, checkRole, async (req, res) => {
+  let { status, id } = req.body;
+  let query = "UPDATE user SET status=? WHERE id=?";
+
+  try {
+    const [results] = await pool.query(query, [status, id]);
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: "User id does not exist" });
+    }
+    return res.status(200).json({ message: "User Updated Successfully" });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+});
+
+// Ruta para verificar si el token es válido
+router.get("/checkToken", authenticateToken, (req, res) => {
   return res.status(200).json({ message: "true" });
 });
-// Ruta para cambiar la contraseña de un usuario
-router.post("/changePassword", auth.authenticateToken, (req, res) => {
-  const user = req.body;
-  const email = res.locals.email; 
 
-  // Verifica si la contraseña antigua es correcta
-  var query = "SELECT * FROM user WHERE email=? AND password=?";
-  connection.query(query, [email, user.oldPassword], (err, results) => {
-    if (!err) {
-      if (results.length <= 0) {
-        return res.status(400).json({ message: "Incorrect Old Password" });
-      } 
-      
-      // Si la contraseña antigua es correcta, actualiza la nueva
-      query = "UPDATE user SET password=? WHERE email=?";
-      connection.query(query, [user.newPassword, email], (err, results) => {
-        if (!err) {
-          return res.status(200).json({ message: "Password Updated Successfully." });
-        } else {
-          return res.status(500).json(err);
-        }
-      });
-      
-    } else {
-      return res.status(500).json(err); 
+// Ruta para cambiar la contraseña de un usuario
+router.post("/changePassword", authenticateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const email = res.locals.email;
+
+  let query = "SELECT password FROM user WHERE email=?";
+  
+  try {
+    const [results] = await pool.query(query, [email]);
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
     }
-  });
+
+    const user = results[0];
+    const match = await bcrypt.compare(oldPassword, user.password);
+    if (!match) {
+      return res.status(400).json({ message: "Contraseña antigua incorrecta." });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    query = "UPDATE user SET password=? WHERE email=?";
+    await pool.query(query, [hashedPassword, email]);
+
+    return res.status(200).json({ message: "Contraseña actualizada correctamente." });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 });
 
-
-module.exports = router;
+export default router;

@@ -1,48 +1,53 @@
-const express = require('express');
-const connection = require('../connection');
+import express from "express";
+import pool from "../connection.js"; // Asegúrate de usar la extensión .js
+import { authenticateToken } from "../services/authentication.js";
+import { checkRole } from "../services/checkRole.js";
+
 const router = express.Router();
-var auth = require('../services/authentication');
-var checkRole = require('../services/checkRole');
 
-router.post('/add',auth.authenticateToken,checkRole.checkRole,(req,res,next)=>{
-    let category = req.body;
-    query = "insert into category (name) values(?)";
-    connection.query(query,[category.name],(err,results)=>{
-        if(!err){
-            return res.status(200).json({message:"Category Added Successfully"});
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
+// 📌 Agregar una nueva categoría
+router.post("/add", authenticateToken, checkRole, async (req, res) => {
+    try {
+        const { name } = req.body;
+        const query = "INSERT INTO category (name) VALUES (?)";
+        
+        await pool.query(query, [name]);
+        return res.status(200).json({ message: "Category Added Successfully" });
 
-router.get('/get',auth.authenticateToken,(req,res,next)=>{
-    var query = "select *from category order by name";
-    connection.query(query,(err,results)=>{
-        if(!err){
-            return res.status(200).json(results);
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
 
-router.patch('/update',auth.authenticateToken,checkRole.checkRole,(req,res,next)=>{
-    let product = req.body;
-    var query = "update category set name=? where id=?";
-    connection.query(query,[product.name,product.id],(err,results)=>{
-        if(!err){
-            if(results.affectedRows ==0){
-                return res.status(400).json({message:"Category id does not found"});
-            }
-         return res.status(200).json({message:"Category Update Successfully"});
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
+// 📌 Obtener todas las categorías ordenadas por nombre
+router.get("/get", authenticateToken, async (req, res) => {
+    try {
+        const query = "SELECT * FROM category ORDER BY name";
+        const [results] = await pool.query(query);
+        
+        return res.status(200).json(results);
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
 
-module.exports = router;
+// 📌 Actualizar una categoría
+router.patch("/update", authenticateToken, checkRole, async (req, res) => {
+    try {
+        const { id, name } = req.body;
+        const query = "UPDATE category SET name = ? WHERE id = ?";
+        
+        const [results] = await pool.query(query, [name, id]);
+
+        if (results.affectedRows === 0) {
+            return res.status(400).json({ message: "Category ID not found" });
+        }
+        return res.status(200).json({ message: "Category Updated Successfully" });
+
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
+
+// 📌 Exportamos el router en formato ESM
+export default router;

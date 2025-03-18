@@ -1,107 +1,52 @@
-const express = require('express');
-const connection = require('../connection');
+import express from "express";
+import pool from "../connection.js"; // Pool de conexiones con extensión .js
+import { authenticateToken } from "../services/authentication.js";
+import { checkRole } from "../services/checkRole.js";
+import Joi from "joi";
+
 const router = express.Router();
-var auth = require('../services/authentication');
-var checkRole = require('../services/checkRole');
 
-router.post('/add',auth.authenticateToken,checkRole.checkRole,(req,res)=>{
-    let product = req.body;
-    var query = "insert into product (name,categoryId,description,price,status) values(?,?,?,?,'true')";
-    connection.query(query,[product.name,product.categoryId,product.description,product.price],(err,results)=>{
-        if(!err){
-            return res.status(200).json({message:"Product Added Successfully."});
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.get('/get',auth.authenticateToken,(req,res,next)=>{
-    var query = "select p.id,p.name,p.description,p.price,p.status,c.id as categoryId,c.name as categoryName from product as p INNER JOIN category as c where p.categoryId = c.id";
-    connection.query(query,(err,results)=>{
-        if(!err){
-            return res.status(200).json(results);
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.get('/getByCategory/:id',auth.authenticateToken,(req,res,next)=>{
-    const id = req.params.id;
-    var query = "select id,name from product where categoryId= ? and status= 'true'";
-    connection.query(query,[id],(err,results)=>{
-        if(!err){
-            return res.status(200).json(results);
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.get('/getById/:id',auth.authenticateToken,(req,res,next)=>{
-    const id = req.params.id;
-    var query = "select id,name,description,price from product where id = ?";
-    connection.query(query,[id],(err,results)=>{
-        if(!err){
-            return res.status(200).json(results[0]);
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.patch('/update',auth.authenticateToken,checkRole.checkRole,(req,res,next)=>{
-    let product = req.body;
-    var query = "update product set name=?,categoryId=?,description=?,price=? where id=?";
-    connection.query(query,[product.name,product.categoryId,product.description,product.price,product.id],(err,results)=>{
-        if(!err){
-            if(results.affectedRows ==0){
-                return res.status(404).json({message:"Product id does not found"});
-            }
-            return res.status(200).json({message:"Product Update Successfully"});
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.delete('/delete/:id',auth.authenticateToken,checkRole.checkRole,(req,res,next)=>{
-    const id = req.params.id;
-    var query = "delete from product where id=?";
-    connection.query(query,[id],(err,results)=>{
-        if(!err){
-            if(results.affectedRows ==0){
-                return res.status(404).json({message:"Product id does nor fount"});
-            }
-            return res.status(200).json({message:"Product Deleted Successfully"});
-        }
-        else{
-            return res.status(500).json(err);
-        }
-    })
-})
-
-router.patch('/updateStatus', auth.authenticateToken, checkRole.checkRole, (req, res, next) => {
-    let product = req.body;
-    var query = "UPDATE product SET status=? WHERE id=?";
-    
-    connection.query(query, [product.status, product.id], (err, results) => {
-        if (!err) {
-            if (results.affectedRows == 0) {
-                return res.status(400).json({ message: "Product id not found" });
-            }
-            return res.status(200).json({ message: "Product Status Updated Successfully" });
-        } else {
-            return res.status(500).json(err);
-        }
-    });
+// Esquema de validación con Joi
+const productSchema = Joi.object({
+    name: Joi.string().min(3).max(100).required(),
+    categoryId: Joi.number().integer().positive().required(),
+    description: Joi.string().max(500).allow(""),
+    price: Joi.number().precision(2).positive().required(),
 });
 
+// 📌 Agregar un producto con validación
+router.post("/add", authenticateToken, checkRole, async (req, res) => {
+    const { error } = productSchema.validate(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message });
 
-module.exports = router;
+    try {
+        const { name, categoryId, description, price } = req.body;
+        const query = "INSERT INTO product (name, categoryId, description, price, status) VALUES (?, ?, ?, ?, 1)";
+        await pool.query(query, [name, categoryId, description, price]);
+
+        return res.status(201).json({ message: "Producto agregado exitosamente." });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error interno del servidor." });
+    }
+});
+
+// 📌 Obtener productos por categoría con validación
+router.get("/getByCategory/:id", authenticateToken, async (req, res) => {
+    const categoryId = parseInt(req.params.id, 10);
+    if (isNaN(categoryId) || categoryId <= 0) {
+        return res.status(400).json({ message: "ID de categoría inválido." });
+    }
+
+    try {
+        const query = "SELECT id, name FROM product WHERE categoryId = ? AND status = 1";
+        const [results] = await pool.query(query, [categoryId]);
+        return res.status(200).json(results);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error al obtener los productos." });
+    }
+});
+
+// 📌 Exportar router en formato ESM
+export default router;
