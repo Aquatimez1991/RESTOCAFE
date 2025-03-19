@@ -3,6 +3,7 @@ import { BestSellerComponent } from '../best-seller/best-seller.component';
 import { MatIconModule } from '@angular/material/icon'; // ✅ Importado correctamente
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SignupComponent } from '../signup/signup.component';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,12 @@ signupAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
     this.dialog.open(SignupComponent,dialogConfig);
+}
+
+forgotPasswordAction(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    this.dialog.open(ForgotPasswordComponent,dialogConfig);
 }
 
 }

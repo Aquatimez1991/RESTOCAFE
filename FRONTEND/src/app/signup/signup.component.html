@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="custom-toolbar">
   <mat-toolbar-row fxLayout="row">
-    <span class="dialog-title">Inscribirse</span>
+    <span class="dialog-title">Crear cuenta</span>
     <span class="spacer"></span>
     <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
       <mat-icon class="close-icon">close</mat-icon>
@@ -122,16 +122,7 @@
       </mat-form-field>
     </div>
     <mat-dialog-actions align="end" class="action-buttons">
-      <button
-        class="signup-button"
-        mat-raised-button
-        color="primary"
-        type="submit"
-        (click)="handleSingUpSubmitButton()"
-        [disabled]="signupForm.invalid || signupForm.pristine"
-      >
-        Signup
-      </button>
+      <button class="signup-button" mat-raised-buttoncolor="primary"type="submit"(click)="handleSingUpSubmitButton()"[disabled]="signupForm.invalid || signupForm.pristine"[ngClass]="{'enabled': !signupForm.invalid && !signupForm.pristine}">Signup</button>
       <button
         class="close-button"
         mat-raised-button

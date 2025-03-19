@@ -55,4 +55,13 @@ export class UserService {
       { headers: new HttpHeaders().set('Content-Type', 'application/json') }
     );
   }
+
+  resetPassword(data: any) {
+    return this.httpClient.post(
+      this.url + "/user/resetPassword",
+      data,
+      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
+    );
+  }
+  
 }

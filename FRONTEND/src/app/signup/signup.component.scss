@@ -113,15 +113,29 @@
     }
   }
 
-  /* 🔹 Botón Signup deshabilitado */
-  .signup-button[disabled] {
-    background-color: #e0e0e0 !important;
-    color: #9e9e9e !important;
-    cursor: not-allowed;
-    border-radius: 8px;
-    font-weight: bold;
-    box-shadow: none;
-  }
+/* 🔹 Botón Signup - Deshabilitado */
+.signup-button[disabled] {
+  background-color: #e0e0e0 !important;
+  color: #9e9e9e !important;
+  cursor: not-allowed;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: none;
+  transition: background-color 0.3s ease, color 0.3s ease, cursor 0.3s ease;
+}
+
+/* Botón Signup - Habilitado (Naranja) */
+.signup-button.enabled {
+  background-color: #f44336 !important; /* Naranja */
+  color: white !important;
+  cursor: pointer !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signup-button.enabled:hover {
+  background-color: #f44336 !important; /* Tono más oscuro al pasar el mouse */
+}
+
 
   /* 🔹 Botón de cierre (en el footer del diálogo) */
   .close-button {
