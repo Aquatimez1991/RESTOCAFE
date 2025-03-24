@@ -64,6 +64,7 @@
     background-color: white;
     border-radius: 8px;
     padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   /* 🔹 Campos de formulario */
@@ -120,7 +121,7 @@
   cursor: not-allowed;
   border-radius: 8px;
   font-weight: bold;
-  box-shadow: none;
+  padding: 10px 20px;
   transition: background-color 0.3s ease, color 0.3s ease, cursor 0.3s ease;
 }
 
@@ -128,8 +129,8 @@
 .signup-button.enabled {
   background-color: #f44336 !important; /* Naranja */
   color: white !important;
+  border-radius: 8px;
   cursor: pointer !important;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .signup-button.enabled:hover {

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon'; // ✅ Importado correct
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SignupComponent } from '../signup/signup.component';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,12 @@ forgotPasswordAction(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
     this.dialog.open(ForgotPasswordComponent,dialogConfig);
+}
+
+loginAction(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.width = '550px';
+  this.dialog.open(LoginComponent,dialogConfig);
 }
 
 }

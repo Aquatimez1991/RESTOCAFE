@@ -122,14 +122,23 @@
       </mat-form-field>
     </div>
     <mat-dialog-actions align="end" class="action-buttons">
-      <button class="signup-button" mat-raised-buttoncolor="primary"type="submit"(click)="handleSingUpSubmitButton()"[disabled]="signupForm.invalid || signupForm.pristine"[ngClass]="{'enabled': !signupForm.invalid && !signupForm.pristine}">Signup</button>
+      <button
+        class="signup-button"
+        mat-raised-button
+        type="submit"
+        (click)="handleSingUpSubmitButton()"
+        [disabled]="signupForm.invalid || signupForm.pristine"
+        [ngClass]="{ enabled: !signupForm.invalid && !signupForm.pristine }"
+      >
+      <mat-icon>send</mat-icon> Enviar
+      </button>
       <button
         class="close-button"
         mat-raised-button
         color="warn"
         mat-dialog-close
       >
-        Close
+      <mat-icon>cancel</mat-icon> Cerrar
       </button>
     </mat-dialog-actions>
   </form>

@@ -1,0 +1,50 @@
+<mat-toolbar class="custom-toolbar">
+  <mat-toolbar-row>
+    <span class="dialog-title">Iniciar Sesión</span>
+    <span class="spacer"></span>
+    <button mat-icon-button mat-dialog-close class="icon-close-button" aria-label="Cerrar">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography custom-dialog-content">
+  <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+    <div class="form-field">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput formControlName="email" required class="custom-input">
+        <mat-error *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">Este campo es obligatorio.</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['pattern']">Formato de email inválido.</span>
+        </mat-error> 
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required class="custom-input">
+        <button mat-icon-button matSuffix (click)="hide = !hide" 
+                [attr.aria-label]="hide ? 'Mostrar contraseña' : 'Ocultar contraseña'">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Este campo es obligatorio.</span>
+        </mat-error>                
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-dialog-actions" align="end">
+  <button class="login-button"
+  mat-raised-button
+  type="submit"
+  (click)="handleSubmit()"
+  [disabled]="loginForm.invalid || loginForm.pristine"
+  [ngClass]="{'enabled': !loginForm.invalid && !loginForm.pristine}">
+  <mat-icon>login</mat-icon> Iniciar sesión
+</button>
+  <button class="close-button" mat-raised-button color="warn" mat-dialog-close  aria-label="Cerrar">
+    <mat-icon>cancel</mat-icon> Cerrar
+  </button>
+</mat-dialog-actions>
