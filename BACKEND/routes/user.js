@@ -143,7 +143,7 @@ router.post("/forgotPassword", async (req, res) => {
 });
 
 // 📌 Restablecimiento de contraseña
-router.post("/resetPassword", async (req, res) => {
+router.patch("/resetPassword", async (req, res) => {
   const { token, newPassword } = req.body;
   let query = "SELECT email FROM user WHERE reset_token=?";
 

@@ -1,67 +1,45 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {environment} from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiURL = environment.apiUrl; 
 
-  url = environment.apiUrl; 
-  constructor(private httpClient: HttpClient) { }
-  signup(data: any) {
-    return this.httpClient.post(
-      this.url + '/user/signup',
-      data, // The data to be sent in the request body.
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') } // Ensure JSON content type.
-    );
+  constructor(private http: HttpClient) {}
+
+  checkToken(): Observable<any> {
+    return this.http.get(`${this.apiURL}/user/checkToken`);
   }
 
-  forgotPassword(data: any) {
-    return this.httpClient.post(
-      this.url + "/user/forgotPassword",
-      data,
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-    );
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/user/login`, data);
   }
 
-  login(data: any) {
-    return this.httpClient.post(
-      this.url + "/user/login",
-      data,
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-    );
+  signup(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/user/signup`, data);
   }
 
-  checkToken() {
-    this.httpClient.get(this.url + "/user/checkToken");  // TODO: Implemented that API in the backend
+  forgotPassword(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/user/forgotPassword`, data);
   }
 
-  changePassword(data: any) {
-    return this.httpClient.post(
-      this.url + "/user/changePassword/",
-      data,
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-    );
+  changePassword(data: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/user/changePassword`, data);
   }
 
-  getUsers() {
-    return this.httpClient.get(this.url + "/user/getAllUsers");
+  getUsers(): Observable<any> {
+    return this.http.get(`${this.apiURL}/user/get`);
   }
 
-  update(data: any) {
-    return this.httpClient.post(
-      this.url + '/user/update',
-      data,
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-    );
+  update(data: any): Observable<any> {
+    return this.http.patch(`${this.apiURL}/user/update`, data);
   }
 
-  resetPassword(data: any) {
-    return this.httpClient.post(
-      this.url + "/user/resetPassword",
-      data,
-      { headers: new HttpHeaders().set('Content-Type', 'application/json') }
-    );
+  resetPassword(data: any): Observable<any> {
+    return this.http.patch(`${this.apiURL}/user/resetPassword`, data);
   }
-  
 }

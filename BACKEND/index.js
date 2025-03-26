@@ -10,7 +10,7 @@ import dashboardRoute from './routes/dashboard.js';
 const app = express();
 
 // 📌 Configurar CORS con opciones (ajustar según necesidades)
-app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] }));
 
 // 📌 Middleware para registrar solicitudes
 app.use(morgan('dev'));
