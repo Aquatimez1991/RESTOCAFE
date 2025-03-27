@@ -1,16 +1,19 @@
-export class GlobalConstants{
-  //Message
-  public static genericError: string = "Something went wrong. Please try again later";
-  public static unauthorized:string = "You are not authorized person to access this page";  // npm install jwt-decode
-  public static productExistsError:string = "Product already exists";
-  public static productAdded:string = "Product added successfully";
+export class GlobalConstants {
+  // Mensajes generales
+  public static genericError: string = "Algo salió mal. Por favor, inténtelo de nuevo más tarde.";
+  public static unauthorized: string = "No tiene autorización para acceder a esta página.";
+  public static productExistsError: string = "El producto ya existe.";
+  public static productAdded: string = "Producto agregado exitosamente.";
 
-  
-  //Regex (used for validating -> coming from the regex.txt project file)
-  public static nameRegex:string = "[a-zA-Z0-9 ]*";
-  public static emailRegex:string = "[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}";
-  public static contactNumberRegex:string = "^[e0-9]{10,10}$";
+  // Expresiones regulares (validaciones)
+  public static nameRegex: string = "[a-zA-Z0-9 ]*";
+  public static emailRegex: string = "[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}";
+  public static contactNumberRegex: string = "^[e0-9]{10,10}$";
 
-  //Variable
-  public static error:string = "error";
+  // Variables
+  public static error: string = "error";
+
+  // Mensajes de autenticación y permisos
+  public static sessionExpired: string = "Su sesión ha expirado. Por favor, inicie sesión nuevamente.";
+  public static accessDenied: string = "No tiene los permisos necesarios para acceder a esta página.";
 }
