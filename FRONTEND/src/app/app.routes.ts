@@ -3,6 +3,8 @@ import { HomeComponent } from './home/home.component';
 import { FullComponent } from './layouts/full/full.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RouteGuardService } from './services/route-guard.service';
+import { importProvidersFrom } from '@angular/core';
+import { DashboardComponent } from './dashboard/dashboard.component'; // ✅ Importa el componente
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,8 +15,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () =>
-          import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+        component: DashboardComponent, // ✅ Usamos el componente directamente
         canActivate: [RouteGuardService],
         data: { expectedRole: ['admin', 'user'] }
       }
@@ -22,5 +23,3 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: '' }
 ];
-
-export class AppRoutingModule { }

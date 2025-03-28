@@ -1,16 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  url = environment.apiUrl;
+  private apiURL = environment.apiUrl; 
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getDetails(){
-    return this.httpClient.get(this.url + '/dashboard/details');
+  getDetails(): Observable<any> {
+    const token = sessionStorage.getItem('token'); // Recupera el token desde el almacenamiento local
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get(`${this.apiURL}/dashboard/details`, { headers });
   }
 }
