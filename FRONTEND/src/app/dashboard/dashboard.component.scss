@@ -1,80 +1,123 @@
-.position-relative {
-	position: relative;
-}
-
-.add-contact {
-	position: absolute;
-    right: 17px;
-    top: 57px;
-}
-
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-  }
-  
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  
-  .column {
-    float: left;
-    width: 33.3%;
-    margin-bottom: 16px;
-    padding: 0 8px;
-  }
-  
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
-  }
-  
-  .about-section {
-    padding: 50px;
-    text-align: center;
-    background-color: #474e5d;
-    color: white;
-  }
-  
-  .container {
-    padding: 0 16px;
-  }
-  
-  .container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  .title {
-    color: black;
-    text-align: center !important;
-  }
-  
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #e53935;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-weight: bold;
-  }
-  
-  .button:hover {
-    background-color: #555;
-  }
-  
-  @media screen and (max-width: 650px) {
-    .column {
-      width: 100%;
-      display: block;
-    }
-  }
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  color: #ffffff;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Ajuste del título Dashboard */
+mat-card.titulo {
+  background-color: #ff5252; /* Color de fondo del título */
+  color: white; /* Color del texto */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  text-align: center; /* Centrar el texto */
+  font-size: 2rem; /* Tamaño de fuente más grande */
+  margin-bottom: 20px; /* Espacio inferior */
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2); /* Sombra para el título */
+  width: 100%; /* Ancho completo */
+  max-width: 1200px; /* Ancho máximo */
+  margin: 0 auto; /* Centrar el título en la página */
+  display: flex; /* Flexbox para centrar el contenido */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items:flex-start; /* Centrar verticalmente */
+  height: 100px; /* Altura del título */
+  font-weight: bold; /* Negrita para el texto */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra para el texto */
+  background-image: linear-gradient(to right, #ff5252, #ff1744); /* Degradado de color */
+}
+
+/* Contenedor principal */
+.page-content {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  width: 100%;
+  min-height: 100vh;
+}
+
+app-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px; /* Ancho máximo */
+  width: 100%;
+  padding: 20px;
+}
+
+/* Contenedor de tarjetas */
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px; /* Mayor separación entre tarjetas */
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Columnas ajustables */
+.column {
+  flex: 1;
+  min-width: 280px; /* Tarjetas más anchas */
+  max-width: 400px; /* Ajuste del tamaño máximo */
+}
+
+/* Estilos de las tarjetas */
+.card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px; /* Aumentamos el padding */
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Ocupar todo el espacio disponible en la columna */
+  margin: 20px auto; /* Margen más uniforme */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Contenedor dentro de cada tarjeta */
+.container {
+  padding: 15px;
+}
+
+/* Títulos dentro de las tarjetas */
+.title {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #000000;
+}
+
+/* Número grande en las tarjetas */
+h1 {
+  font-size: 3rem; /* Aumentado */
+  font-weight: bold;
+  color: #000000;
+}
+
+/* Botón dentro de las tarjetas */
+.button {
+  background-color: #ff5252;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #d32f2f;
+}

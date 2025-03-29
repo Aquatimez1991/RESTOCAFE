@@ -1,35 +1,43 @@
-import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { NgIf } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
+import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterOutlet } from '@angular/router'; // ✅ Importado correctamente
-import { HeaderComponent } from '../full/header/header.component';
-import { SidebarComponent } from '../full/sidebar/sidebar.component';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RouterModule } from '@angular/router';
+import {AppSidebarComponent} from "../full/sidebar/sidebar.component"; 
+import {AppHeaderComponent} from "../full/header/header.component";
 @Component({
   selector: 'app-full-layout',
   standalone: true,
+  templateUrl: 'full.component.html',
+  styleUrls: ['full.component.scss'],
   imports: [
-    NgIf,
-    MatSidenavModule,
-    MatIconModule,
+    CommonModule,
     MatToolbarModule,
-    RouterOutlet, // ✅ Se agrega aquí
-    HeaderComponent,
-    SidebarComponent
+    MatIconModule,
+    MatButtonModule,
+    MatSidenavModule,
+    RouterModule,
+    AppHeaderComponent,
+    AppSidebarComponent,
   ],
-  templateUrl: './full.component.html',
-  styleUrls: ['./full.component.scss']
 })
-export class FullComponent {
-  isMobile: boolean = false;
+export class FullComponent implements OnDestroy, AfterViewInit {
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(min-width: 768px)');
+
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  }
+
+  ngAfterViewInit() {}
 }
