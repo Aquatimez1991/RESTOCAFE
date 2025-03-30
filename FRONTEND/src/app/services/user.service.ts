@@ -28,8 +28,11 @@ export class UserService {
   }
 
   changePassword(data: any): Observable<any> {
-    return this.http.post(`${this.apiURL}/user/changePassword`, data);
+    return this.http.post(`${this.apiURL}/user/changePassword`, data, {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
+    });
   }
+  
 
   getUsers(): Observable<any> {
     return this.http.get(`${this.apiURL}/user/get`);

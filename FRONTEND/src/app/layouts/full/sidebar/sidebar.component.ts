@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  providers: [MenuItems], // ✅ Asegurar que está en providers
   imports: [
     MatListModule,
     MatIconModule,
@@ -31,26 +30,15 @@ export class AppSidebarComponent implements OnDestroy {
   // ✅ Se inyecta correctamente `MenuItems`
   private changeDetectorRef = inject(ChangeDetectorRef);
   private media = inject(MediaMatcher);
-  public menuItemsService = inject(MenuItems); // ✅ Cambio de nombre para evitar confusión
-
-  public menuItems: any[] = []; // ✅ Inicializar array vacío
+  public menuItems= inject(MenuItems);
 
   constructor() {
     this.tokenPayload = jwtDecode(this.token);
     this.userRole = this.tokenPayload?.role;
-
     this.mobileQuery = this.media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-
-    // ✅ Verifica que `getMenuItems()` existe antes de llamarlo
-    if (this.menuItemsService && typeof this.menuItemsService.getMenuItems === 'function') {
-      this.menuItems = this.menuItemsService.getMenuItems();
-    } else {
-      console.error('Error: getMenuItems() no está definido en MenuItems.');
-    }
   }
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }

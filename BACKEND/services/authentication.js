@@ -20,10 +20,12 @@ function authenticateToken(req, res, next) {
         if (err) {
             return res.status(403).json({ message: "Token inválido o expirado" });
         }
-
-        res.locals.user = decoded; 
+    
+        res.locals.user = decoded;  // ✅ Mantienes el objeto completo
+        res.locals.email = decoded.email;  // ✅ Agregas el email de forma directa
         next();
     });
+    
 }
 
 export { authenticateToken };

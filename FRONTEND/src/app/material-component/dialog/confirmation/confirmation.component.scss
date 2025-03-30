@@ -1,0 +1,31 @@
+/* Espaciador flexible dentro del toolbar */
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  /* Estilos generales del diálogo */
+  mat-dialog-content {
+    padding: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px;
+  }
+  
+  /* Botones de acción */
+  button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Iconos dentro de los botones */
+  mat-icon {
+    vertical-align: middle;
+  }
+  

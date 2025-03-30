@@ -8,19 +8,22 @@ mat-list-item {
   padding: 10px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  
 
   &:hover {
     background-color: #f5f5f5; // Color de hover más claro
   }
 
   &.selected {
-    background-color: #ff5733; // Color de selección
-    color: white; // Texto en blanco cuando está seleccionado
-
+    background-color: #ff5733; /* Color de selección */
+    color: white; /* Texto en blanco cuando está seleccionado */
+    border-radius: 0; /* Eliminar esquinas redondeadas */
+  
     mat-icon {
-      color: white; // Icono blanco cuando está seleccionado
+      color: white; /* Icono blanco cuando está seleccionado */
     }
   }
+  
 
   mat-icon {
     margin-right: 10px; // Espaciado entre icono y texto

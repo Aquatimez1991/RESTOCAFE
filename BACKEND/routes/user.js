@@ -202,30 +202,41 @@ router.get("/checkToken", authenticateToken, (req, res) => {
 // 📌 Ruta para cambiar la contraseña de un usuario
 router.post("/changePassword", authenticateToken, async (req, res) => {
   const { oldPassword, newPassword } = req.body;
-  const email = res.locals.email;
+  const email = res.locals.email; // Recuperamos el email desde el token
 
-  let query = "SELECT password FROM user WHERE email=?";
-  
   try {
-    const [results] = await pool.query(query, [email]);
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado." });
-    }
+      // Verificamos la contraseña actual
+      let query = "SELECT password FROM user WHERE email=?";
+      const [results] = await pool.query(query, [email]);
 
-    const user = results[0];
-    const match = await bcrypt.compare(oldPassword, user.password);
-    if (!match) {
-      return res.status(400).json({ message: "Contraseña antigua incorrecta." });
-    }
+      if (results.length === 0) {
+          return res.status(404).json({ message: "Usuario no encontrado." });
+      }
 
-    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-    query = "UPDATE user SET password=? WHERE email=?";
-    await pool.query(query, [hashedPassword, email]);
+      const user = results[0];
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      
+      if (!isMatch) {
+          return res.status(400).json({ message: "La contraseña actual es incorrecta." });
+      }
 
-    return res.status(200).json({ message: "Contraseña actualizada correctamente." });
+      const isSameAsOld = await bcrypt.compare(newPassword, user.password);
+      if (isSameAsOld) {
+        return res.status(400).json({ message: "La nueva contraseña no puede ser igual a la actual" });
+      }
+
+      // Hasheamos la nueva contraseña
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      query = "UPDATE user SET password=? WHERE email=?";
+      await pool.query(query, [hashedPassword, email]);
+
+      return res.status(200).json({ message: "Contraseña cambiada con éxito." });
+
   } catch (err) {
-    return res.status(500).json(err);
+      return res.status(500).json({ error: "Error al cambiar la contraseña." });
   }
 });
+
+
 
 export default router;

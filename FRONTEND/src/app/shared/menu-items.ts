@@ -21,7 +21,7 @@ const MENUITEMS: Menu[] = [
   providedIn: 'root' // Agregar esto para que Angular lo registre automáticamente
 })
 export class MenuItems {
-  getMenuItems(): Menu[] {
+  getMenuitems(): Menu[] {
     return MENUITEMS;
   }
 }
