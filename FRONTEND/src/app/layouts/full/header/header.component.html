@@ -1,17 +1,20 @@
-<!-- Button that triggers the profile menu, displaying an account icon -->
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-  <mat-icon>account_circle</mat-icon>
-</button>
+<!-- Contenedor del botón de perfil -->
 
-<!-- Profile menu that contains options for changing password and logging out -->
-<mat-menu #profile="matMenu" class="mymegamenu">
-  <!-- Menu item to change password, calls the changePassword method when clicked -->
-  <button mat-menu-item (click)="changePassword()">
-    <mat-icon>password</mat-icon> Change Password
+<div class="profile-container">
+  <button [matMenuTriggerFor]="profile" mat-icon-button class="profile-button">
+    <mat-icon class="profile-icon">account_circle</mat-icon>
   </button>
 
-  <!-- Menu item to log out, calls the logout method when clicked -->
-  <button mat-menu-item (click)="logout()">
-    <mat-icon>exit_to_app</mat-icon> Logout
-  </button>
-</mat-menu>
+  <!-- Menú desplegable -->
+  <mat-menu #profile="matMenu" class="profile-menu">
+    <button mat-menu-item class="menu-item" (click)="changePassword()">
+      <mat-icon class="menu-icon">password</mat-icon>
+      <span class="menu-text">Change Password</span>
+    </button>
+
+    <button mat-menu-item class="menu-item" (click)="logout()">
+      <mat-icon class="menu-icon">exit_to_app</mat-icon>
+      <span class="menu-text">Logout</span>
+    </button>
+  </mat-menu>
+</div>

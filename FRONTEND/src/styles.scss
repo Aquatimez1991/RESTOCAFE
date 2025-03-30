@@ -49,3 +49,9 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// Cambia el color de fondo de la barra de navegación del menú lateral
+:root {
+  --mat-sys-surface-container: #ce4444 !important; /* Fondo blanco */
+}
