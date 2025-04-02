@@ -30,7 +30,7 @@ export class AppSidebarComponent implements OnDestroy {
   // ✅ Se inyecta correctamente `MenuItems`
   private changeDetectorRef = inject(ChangeDetectorRef);
   private media = inject(MediaMatcher);
-  public menuItems= inject(MenuItems);
+  public MenuItems= inject(MenuItems);
 
   constructor() {
     this.tokenPayload = jwtDecode(this.token);
