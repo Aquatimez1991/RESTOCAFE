@@ -1,19 +1,15 @@
-import { Directive, HostListener, Inject } from '@angular/core';
-
+import { Directive, HostListener } from '@angular/core';
 import { AccordionLinkDirective } from './accordionlink.directive';
 
 @Directive({
-  selector: '[appAccordionToggle]'
+  selector: '[appAccordionToggle]',
+  standalone: true, // 🚀 La hacemos standalone
 })
 export class AccordionAnchorDirective {
-  protected navlink: AccordionLinkDirective;
-
-  constructor(@Inject(AccordionLinkDirective) navlink: AccordionLinkDirective) {
-    this.navlink = navlink;
-  }
+  constructor(private navlink: AccordionLinkDirective) {}
 
   @HostListener('click', ['$event'])
-  onClick(e: any) {
+  onClick() {
     this.navlink.toggle();
   }
 }

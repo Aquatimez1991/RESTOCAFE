@@ -1,16 +1,15 @@
 import {
   Directive,
   HostBinding,
-  Inject,
   Input,
   OnInit,
   OnDestroy
 } from '@angular/core';
-
 import { AccordionDirective } from './accordion.directive';
 
 @Directive({
-  selector: '[appAccordionLink]'
+  selector: '[appAccordionLink]',
+  standalone: true, // 🚀 La hacemos standalone
 })
 export class AccordionLinkDirective implements OnInit, OnDestroy {
   @Input()
@@ -29,22 +28,19 @@ export class AccordionLinkDirective implements OnInit, OnDestroy {
     }
   }
 
-  protected _selected: boolean=false;
-  protected nav: AccordionDirective;
+  private _selected = false;
 
-  constructor(@Inject(AccordionDirective) nav: AccordionDirective) {
-    this.nav = nav;
-  }
+  constructor(private nav: AccordionDirective) {}
 
-  ngOnInit(): any {
+  ngOnInit(): void {
     this.nav.addLink(this);
   }
 
-  ngOnDestroy(): any {
+  ngOnDestroy(): void {
     this.nav.removeGroup(this);
   }
 
-  toggle(): any {
+  toggle(): void {
     this.selected = !this.selected;
   }
 }

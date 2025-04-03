@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
+import { Directive, Injectable } from '@angular/core';
 
-import { AccordionAnchorDirective, AccordionLinkDirective, AccordionDirective } from './accordion';
+// Importar directivas originales
+import { AccordionAnchorDirective } from './accordion/accordionanchor.directive';
+import { AccordionLinkDirective } from './accordion/accordionlink.directive';
+import { AccordionDirective } from './accordion/accordion.directive';
 
+// Servicio MenuItems
+import { MenuItems } from './menu-items';
 
-@NgModule({
-  declarations: [
+@Directive({
+  selector: '[appSharedModule]',
+  standalone: true,
+  providers: [MenuItems], 
+  hostDirectives: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective
-  ],
-  exports: [
-    AccordionAnchorDirective,
-    AccordionLinkDirective,
-    AccordionDirective
-   ],
-  providers: [ ]
+  ]
 })
-export class SharedModule { }
+export class SharedModule {}

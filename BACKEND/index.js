@@ -1,21 +1,33 @@
-const express = require('express');
-const connection = require('./connection');
-const userRoute = require('./routes/user');
-const categoryRoute = require('./routes/category');
-const productRoute = require('./routes/product');
-const billRoute = require('./routes/bill');
-const dashboardRoute = require('./routes/dashboard');
-var cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import userRoute from './routes/user.js';
+import categoryRoute from './routes/category.js';
+import productRoute from './routes/product.js';
+import billRoute from './routes/bill.js';
+import dashboardRoute from './routes/dashboard.js';
 
 const app = express();
 
-app.use(cors());
-app.use(express.urlencoded({extended: true}));
+// 📌 Configurar CORS con opciones (ajustar según necesidades)
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] }));
+
+// 📌 Middleware para registrar solicitudes
+app.use(morgan('dev'));
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// 📌 Definir rutas
 app.use('/user', userRoute);
 app.use('/category', categoryRoute);
 app.use('/product', productRoute);
 app.use('/bill', billRoute);
 app.use('/dashboard', dashboardRoute);
 
-module.exports = app;
+// 📌 Ruta de prueba para verificar que el servidor funciona
+app.get('/', (req, res) => {
+    res.json({ message: 'API funcionando correctamente 🚀' });
+});
+
+export default app;

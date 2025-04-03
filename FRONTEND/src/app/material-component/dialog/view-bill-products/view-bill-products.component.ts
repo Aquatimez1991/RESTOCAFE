@@ -1,14 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-bill-products',
   templateUrl: './view-bill-products.component.html',
-  styleUrls: ['./view-bill-products.component.scss']
+  styleUrls: ['./view-bill-products.component.css']
 })
 export class ViewBillProductsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<ViewBillProductsComponent>) {}
 
-  ngOnInit() {
+  ngOnInit(): void {}
+
+  closeDialog(): void {
+    this.dialogRef.close();
   }
 }

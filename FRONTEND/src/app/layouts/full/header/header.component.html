@@ -1,6 +1,20 @@
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-    <mat-icon>account_circle</mat-icon>
-</button>
-<mat-menu #profile="matMenu" class="mymegamenu">
+<!-- Contenedor del botón de perfil -->
 
-</mat-menu>
+<div class="profile-container">
+  <button [matMenuTriggerFor]="profile" mat-icon-button class="profile-button">
+    <mat-icon class="profile-icon">account_circle</mat-icon>
+  </button>
+
+  <!-- Menú desplegable -->
+  <mat-menu #profile="matMenu" class="profile-menu">
+    <button mat-menu-item class="menu-item" (click)="changePassword()">
+      <mat-icon class="menu-icon">password</mat-icon>
+      <span class="menu-text">Change Password</span>
+    </button>
+
+    <button mat-menu-item class="menu-item" (click)="logout()">
+      <mat-icon class="menu-icon">exit_to_app</mat-icon>
+      <span class="menu-text">Logout</span>
+    </button>
+  </mat-menu>
+</div>

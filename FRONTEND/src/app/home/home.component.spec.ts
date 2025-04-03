@@ -7,9 +7,8 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
-    })
-    .compileComponents();
+      imports: [HomeComponent], // ✅ Mover a imports en lugar de declarations
+    }).compileComponents();
   });
 
   beforeEach(() => {

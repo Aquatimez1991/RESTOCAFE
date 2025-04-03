@@ -1,6 +1,7 @@
 {
   "name": "backend-cafe-nodejs",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,17 +11,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "dotenv-safe": "^9.1.0",
     "express": "^4.21.2",
     "googleapis": "^144.0.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "mysql2": "^3.13.0",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.10.0",
     "path": "^0.12.7",
     "pug": "^3.0.3",
     "puppeteer": "^24.3.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "whatwg-url": "^14.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

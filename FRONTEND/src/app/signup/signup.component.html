@@ -1,0 +1,145 @@
+<mat-toolbar color="primary" class="custom-toolbar">
+  <mat-toolbar-row fxLayout="row">
+    <span class="dialog-title">Crear cuenta</span>
+    <span class="spacer"></span>
+    <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+      <mat-icon class="close-icon">close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form [formGroup]="signupForm" class="signup-form">
+    <div class="form-fields">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="custom-label">Nombre</mat-label>
+        <input matInput formControlName="name" class="custom-input" required />
+        <mat-error
+          *ngIf="
+            signupForm.controls.name.touched && signupForm.controls.name.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.name.errors.required"
+            >Este campo es obligatorio.</span
+          >
+          <span *ngIf="signupForm.controls.name.errors.pattern"
+            >Este campo no es válido.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="custom-label">Numero de Contacto</mat-label>
+        <input
+          matInput
+          formControlName="contactNumber"
+          class="custom-input"
+          required
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls.contactNumber.touched &&
+            signupForm.controls.contactNumber.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.contactNumber.errors.required"
+            >Este campo es obligatorio.</span
+          >
+          <span *ngIf="signupForm.controls.contactNumber.errors.pattern"
+            >Este campo no es válido.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="custom-label">Correo</mat-label>
+        <input matInput formControlName="email" class="custom-input" required />
+        <mat-error
+          *ngIf="
+            signupForm.controls.email.touched &&
+            signupForm.controls.email.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.email.errors.required"
+            >Este campo es obligatorio.</span
+          >
+          <span *ngIf="signupForm.controls.email.errors.pattern"
+            >Este campo no es válido.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="custom-label">Clave</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          class="custom-input"
+          type="password"
+          required
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls.password.touched &&
+            signupForm.controls.password.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.password.errors.required"
+            >Este campo es obligatorio.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label class="custom-label">Confirmar clave</mat-label>
+        <input
+          matInput
+          formControlName="confirmPassword"
+          class="custom-input"
+          type="password"
+          required
+        />
+        <mat-error
+          *ngIf="
+            signupForm.controls.confirmPassword.touched &&
+            signupForm.controls.confirmPassword.invalid
+          "
+        >
+          <span *ngIf="signupForm.controls.confirmPassword.errors.required"
+            >Este campo es obligatorio.</span
+          >
+        </mat-error>
+        <mat-hint
+          *ngIf="
+            validatePasswordSubmit() &&
+            !signupForm.controls.confirmPassword.invalid
+          "
+        >
+          <span class="custom-input"
+            >Nueva contraseña y confirmar ¡La contraseña no coincide!
+          </span>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <mat-dialog-actions align="end" class="action-buttons">
+      <button
+        class="signup-button"
+        mat-raised-button
+        type="submit"
+        (click)="handleSingUpSubmitButton()"
+        [disabled]="signupForm.invalid || signupForm.pristine"
+        [ngClass]="{ enabled: !signupForm.invalid && !signupForm.pristine }"
+      >
+      <mat-icon>send</mat-icon> Enviar
+      </button>
+      <button
+        class="close-button"
+        mat-raised-button
+        color="warn"
+        mat-dialog-close
+      >
+      <mat-icon>cancel</mat-icon> Cerrar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

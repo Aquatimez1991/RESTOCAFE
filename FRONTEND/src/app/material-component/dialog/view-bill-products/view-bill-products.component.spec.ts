@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewBillProductsComponent } from './view-bill-products.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewBillProductsComponent', () => {
   let component: ViewBillProductsComponent;
@@ -8,9 +8,11 @@ describe('ViewBillProductsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewBillProductsComponent ]
-    })
-    .compileComponents();
+      imports: [ViewBillProductsComponent, MatDialogModule], // ✅ Importamos MatDialogModule
+      providers: [
+        { provide: MatDialogRef, useValue: {} } // ✅ Mockeamos MatDialogRef
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

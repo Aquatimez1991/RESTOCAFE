@@ -1,12 +1,19 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
+import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorInterceptor } from './app/services/token-interceptor.interceptor';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorInterceptor,
+      multi: true
+    }
+  ]
+}).catch(err => console.error(err));
