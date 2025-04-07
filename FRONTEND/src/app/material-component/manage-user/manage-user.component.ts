@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-manage-user',
   imports: [],
   templateUrl: './manage-user.component.html',
-  styleUrl: './manage-user.component.css'
+  styleUrl: './manage-user.component.scss'
 })
 export class ManageUserComponent {
 

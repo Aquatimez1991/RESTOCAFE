@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-view-bill',
   imports: [],
   templateUrl: './view-bill.component.html',
-  styleUrl: './view-bill.component.css'
+  styleUrl: './view-bill.component.scss'
 })
 export class ViewBillComponent {
 

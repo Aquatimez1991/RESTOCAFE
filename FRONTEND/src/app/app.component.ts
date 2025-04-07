@@ -8,7 +8,7 @@ import { Router } from '@angular/router'; // ✅ Para manejar navegación
   selector: 'app-root',
   standalone: true, // ✅ Sigue siendo Standalone
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   imports: [RouterModule, SharedLoaderModule]
 })
 export class AppComponent implements OnInit {

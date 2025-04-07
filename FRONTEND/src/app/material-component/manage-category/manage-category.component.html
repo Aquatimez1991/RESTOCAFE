@@ -1,46 +1,58 @@
-<!-- Card for managing categories with a title and an add button -->
-<mat-card>
-    <b><span>Gestionar Categoría</span></b>
-    <button mat-flat-button color="primary" class="float-right" (click)="handleAddAction()">
-      <mat-icon>add_circle</mat-icon> Agregar Categoría
-    </button>
-  </mat-card>
-  <hr>
-  
-  <!-- Card containing a filter input for the table -->
-  <mat-card>
-    <mat-form-field appearance="fill">
-      <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" #input>
-    </mat-form-field>
-  </mat-card>
-  <hr>
-  
-  <!-- Responsive container for the category table -->
-  <div class="responsive_table">
-    <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
-  
-      <!-- Column definition for the category name -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
-  
-      <!-- Column definition for the actions (Edit button) -->
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef>Acción</th>
-        <td mat-cell *matCellDef="let element" class="action-link">
-          <button mat-icon-button color="primary" matTooltip="Edit" (click)="handleEditAction(element)">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-  
-      <!-- Header row -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
-      <!-- Data rows -->
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
-    </table>
+<div class="page-content">
+  <!-- Contenedor de las tres secciones en una fila -->
+  <div class="row">
+    
+    <!-- Sección 1: Gestionar Categoría -->
+    <section class="col">
+      <mat-card>
+        <div class="card-header">
+          <b><span>Gestionar Categoría</span></b>
+          <button mat-flat-button color="primary" class="float-right custom-button" (click)="handleAddAction()">
+            <mat-icon class="custom-icon">add_circle</mat-icon> Agregar Categoría
+          </button>          
+        </div>
+      </mat-card>
+    </section>
+
+    <!-- Sección 2: Filtro -->
+    <section class="col">
+      <mat-card>
+        <mat-form-field appearance="fill">
+          <mat-label>Filtrar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+      </mat-card>
+    </section>
+
+    <!-- Sección 3: Tabla -->
+    <section class="col">
+      <mat-card>
+        <div class="responsive_table">
+          <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+
+            <!-- Nombre -->
+            <ng-container matColumnDef="name" class="name-column">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <!-- Acción -->
+            <ng-container matColumnDef="edit" class="action-column">
+              <th mat-header-cell *matHeaderCellDef>Acción</th>
+              <td mat-cell *matCellDef="let element" class="action-link">
+                <button mat-icon-button color="primary" matTooltip="Editar" matTooltipPosition="above" (click)="handleEditAction(element)">
+                  <mat-icon>edit</mat-icon>
+                </button>                
+              </td>
+            </ng-container>
+
+            <!-- Header y filas -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card>
+    </section>
+
   </div>
-  
+</div>

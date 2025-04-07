@@ -12,10 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+
 @Component({
   selector: 'app-manage-category',
   standalone: true,
-  imports: [CommonModule, MatTableModule, RouterModule, MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, MatTableModule, RouterModule, MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule, MatTooltipModule, MatButtonModule],
   templateUrl: './manage-category.component.html',
   styleUrls: ['./manage-category.component.scss']
 })
@@ -68,22 +71,9 @@ export class ManageCategoryComponent {
    * Abre el diálogo para agregar una nueva categoría.
    */
   handleAddAction() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      action: 'Add'
-    };
-    dialogConfig.width = "850px"; // Set the width of the dialog
-    const dialogRef = this.dialog.open(CategoryComponent, dialogConfig); // Open the add category dialog
-
-    // Close the dialog if the user navigates to a different route
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-
-    // Subscribe to the event emitted when a new category is added, and refresh the table data
-    dialogRef.componentInstance.onAddCategory.set(true);
-    this.tableData();
+    this.openCategoryDialog('Add');
   }
+  
 
   /**
    * Abre el diálogo para editar una categoría existente.
@@ -100,12 +90,20 @@ export class ManageCategoryComponent {
       width: '850px',
       data: { action, data }
     };
-    
+  
     const dialogRef = this.dialog.open(CategoryComponent, dialogConfig);
-
+  
     this.router.events.subscribe(() => dialogRef.close());
-
-    dialogRef.componentInstance.onAddCategory.set(true);
-    dialogRef.afterClosed().subscribe(() => this.tableData());
+  
+    // ✅ Esperar a que se cierre el diálogo y recargar si hubo cambio
+    dialogRef.afterClosed().subscribe(() => {
+      const added = dialogRef.componentInstance.onAddCategory();
+      const edited = dialogRef.componentInstance.onEditCategory();
+  
+      if (added || edited) {
+        this.tableData(); // 🔄 Recargar tabla
+      }
+    });
   }
+  
 }

@@ -1,1 +1,36 @@
-<p>category works!</p>
+<!-- Toolbar del diálogo -->
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span>{{ dialogAction() }} Categoría</span>
+      <button mat-icon-button mat-dialog-close aria-label="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <!-- Contenido principal del formulario -->
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="categoryForm">
+      <div fxLayout="column" fxLayoutGap="16px">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" />
+          <mat-error *ngIf="categoryForm.controls['name'].touched && categoryForm.controls['name'].invalid">
+            <span *ngIf="categoryForm.controls['name'].errors?.['required']">Este campo es obligatorio.</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+  
+  <!-- Acciones -->
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="handleSubmit()"
+            [disabled]="!categoryForm.valid || !categoryForm.dirty">
+      <mat-icon>save</mat-icon> {{ action() }}
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+      <mat-icon>cancel</mat-icon> Close
+    </button>
+  </mat-dialog-actions>
+  
