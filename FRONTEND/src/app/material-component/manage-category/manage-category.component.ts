@@ -60,12 +60,21 @@ export class ManageCategoryComponent {
    * Filtra la tabla en función del texto ingresado en el input.
    */
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    const dataSource = this.dataSource();
-    if (dataSource) {
-      dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const ds = this.dataSource();
+  
+    if (ds) {
+      // Definir cómo filtrar (por ejemplo, filtrar por name)
+      ds.filterPredicate = (data: any, filter: string): boolean => {
+        const str = `${data.name} ${data.description}`.toLowerCase();
+        return str.includes(filter);
+      };
+      
+  
+      ds.filter = filterValue;
     }
   }
+  
 
   /**
    * Abre el diálogo para agregar una nueva categoría.

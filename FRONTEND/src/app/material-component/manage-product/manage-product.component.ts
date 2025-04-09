@@ -72,9 +72,21 @@ export class ManageProductComponent {
     const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
     const ds = this.dataSource();
     if (ds) {
+      ds.filterPredicate = (data: any, filter: string): boolean => {
+        const combinedStr =
+          (data.name ?? '') +
+          (data.categoryName ?? '') +
+          (data.description ?? '') +
+          (data.price?.toString() ?? '') +
+          (data.status ? 'activo' : 'inactivo');
+
+          
+        return combinedStr.toLowerCase().includes(filter);
+      };
       ds.filter = value;
     }
   }
+  
 
   handleAddAction() {
     this.openProductDialog('Add');

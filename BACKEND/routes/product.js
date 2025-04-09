@@ -125,10 +125,16 @@ router.delete("/delete/:id", authenticateToken, checkRole, async (req, res) => {
 
 // 📌 Actualizar el estado de un producto
 router.patch("/updateStatus", authenticateToken, checkRole, async (req, res) => {
-  const { id, status } = req.body;
-  if (!id || typeof status !== "boolean") {
-    return res.status(400).json({ message: "ID y estado son requeridos." });
+  let { id, status } = req.body;
+
+  // Convertir string a boolean si es necesario
+  if (typeof status === "string") {
+    status = status.toLowerCase() === "true";
   }
+
+  if (!id || isNaN(Number(id)) || typeof status !== "boolean") {
+    return res.status(400).json({ message: "ID y estado válidos son requeridos." });
+  }  
 
   try {
     const query = "UPDATE product SET status = ? WHERE id = ?";
@@ -144,6 +150,7 @@ router.patch("/updateStatus", authenticateToken, checkRole, async (req, res) => 
     return res.status(500).json({ message: "Error al actualizar el estado del producto." });
   }
 });
+
 
 // 📌 Exportar router en formato ESM
 export default router;

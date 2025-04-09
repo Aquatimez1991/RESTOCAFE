@@ -1,4 +1,7 @@
 export class GlobalConstants {
+  static productCategoryError(productCategoryError: any, error: string) {
+    throw new Error('Method not implemented.');
+  }
   // Mensajes generales
   public static genericError: string = "Algo salió mal. Por favor, inténtelo de nuevo más tarde.";
   public static unauthorized: string = "No tiene autorización para acceder a esta página.";

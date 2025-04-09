@@ -48,6 +48,6 @@ export class CategoryService {
       'Authorization': `Bearer ${token}`
     });
   
-    return this.httpClient.get(`${this.url}/category/getAllCategories?filterValue=true`, { headers });
+    return this.httpClient.get(`${this.url}/category/get`, { headers });
   }
 }
