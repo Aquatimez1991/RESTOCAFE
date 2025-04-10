@@ -16,6 +16,7 @@ import { GlobalConstants } from '../../shared/global-constants';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+
 @Component({
   selector: 'app-manage-order',
   standalone: true,
@@ -59,8 +60,8 @@ export class ManageOrderComponent {
     paymentMethod: [null, [Validators.required]],
     product: [null, [Validators.required]],
     category: [null, [Validators.required]],
-    quantity: [null, [Validators.required]],  // ← cantidad ahora empieza en 1
-    price: [null, [Validators.required]],     // ← precio ahora empieza en 0
+    quantity: [1, [Validators.required]],  // ← cantidad ahora empieza en 1
+    price: [0, [Validators.required]],     // ← precio ahora empieza en 0
     total: [0, [Validators.required]]
   });
 
@@ -113,14 +114,16 @@ export class ManageOrderComponent {
 
   getProductDetails(value: any) {
     this.productService.getById(value.id).subscribe((response: any) => {
-      this.price = response.price;
-      this.manageOrderForm.controls['price'].setValue(response.price);
+      const productData = response.data;
+      this.price.set(productData.price);
+      this.manageOrderForm.controls['price'].setValue(productData.price);
       this.manageOrderForm.controls['quantity'].setValue('1');
-      this.manageOrderForm.controls['total'].setValue(this.price() * 1);
+      this.manageOrderForm.controls['total'].setValue(productData.price * 1);
     }, (error: any) => {
       this.ngxService.stop();
       this.handleError(error);
     });
+    
   }
   
 
@@ -182,8 +185,6 @@ export class ManageOrderComponent {
       this.snackbarService.openSnackBar(GlobalConstants.productExistsError, GlobalConstants.error);
     }
   }
-  
-  
 
   handleDeleteAction(index: any, element: any) {
     const updatedData = [...this.dataSource()];
@@ -194,30 +195,37 @@ export class ManageOrderComponent {
 
   submitAction() {
     const formData = this.manageOrderForm.value;
+  
     const data = {
-      Bill: {
-        name: formData.name,
-        email: formData.email,
-        contactNumber: formData.contactNumber,
-        paymentMethod: formData.paymentMethod,
-        totalAmount: this.totalAmount()
-      },
-      Products: this.dataSource().map((product: any) => ({
-        id: product.id,
-        name: product.name,
-        categoryId: product.category,
-        description: product.description ?? '',
-        price: product.price
-      }))
+      name: formData.name,
+      email: formData.email,
+      contactNumber: formData.contactNumber,
+      paymentMethod: formData.paymentMethod,
+      totalAmount: this.totalAmount(),
+      productDetails: JSON.stringify(
+        this.dataSource().map((product: any) => ({
+          id: product.id,
+          name: product.name,
+          category: product.category.name ?? product.category,
+          quantity: product.quantity,
+          price: product.price,
+          total: product.total
+        }))
+      )
     };
-
+  
     this.ngxService.start();
     this.billService.generateReport(data).subscribe({
-      next: () => {
-        this.downloadFile(data);
-        this.dataSource.set([]);
-        this.totalAmount.set(0);
-        this.manageOrderForm.reset();
+      next: (res: any) => {
+        const uuid = res?.uuid;
+        if (uuid) {
+          this.downloadFile(uuid, data.name); 
+          this.dataSource.set([]);
+          this.totalAmount.set(0);
+          this.manageOrderForm.reset();
+        } else {
+          this.handleError({ error: { message: 'UUID no recibido del servidor' } });
+        }
       },
       error: (err) => {
         this.ngxService.stop();
@@ -225,15 +233,17 @@ export class ManageOrderComponent {
       }
     });
   }
+  
+  
 
-  downloadFile(data: any) {
-    this.billService.getPdf(data).subscribe({
+  downloadFile(uuid: string, name: string) {
+    this.billService.getPdf({ uuid }).subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const anchor = document.createElement('a');
         anchor.href = url;
-        anchor.download = `${data.Bill.name}.pdf`;
+        anchor.download = `${name}.pdf`;
         anchor.click();
         window.URL.revokeObjectURL(url);
         this.ngxService.stop();
@@ -244,4 +254,5 @@ export class ManageOrderComponent {
       }
     });
   }
+  
 }

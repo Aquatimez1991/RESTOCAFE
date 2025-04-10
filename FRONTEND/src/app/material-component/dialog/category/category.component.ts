@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Importar CommonModule para las directivas como *ngIf
 import { CommonModule } from '@angular/common';
+import { update } from 'node_modules/cypress/types/lodash';
 
 @Component({
   selector: 'app-category',
@@ -112,4 +113,18 @@ export class CategoryComponent {
     this.responseMessage.set(message);
     this.snackbarService.openSnackBar(message, GlobalConstants.error);
   }
+
+  translateAction(action: string): string {
+    const translations: { [key: string]: string } = {
+      add: 'Agregar',
+      edit: 'Editar',
+      delete: 'Eliminar',
+      save: 'Actualizar', 
+      update: 'Actualizar',
+    };
+  
+    return translations[action.toLowerCase()] || action;
+  }
+  
+  
 }
