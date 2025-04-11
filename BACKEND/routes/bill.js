@@ -107,12 +107,12 @@ router.post("/getBills", authenticateToken, async (req, res) => {
 });
 
 // 📌 Eliminar una factura por ID
-router.delete("/delete/:id", authenticateToken, async (req, res) => {
+router.delete("/delete/:uuid", authenticateToken, async (req, res) => {
     try {
-        const { id } = req.params;
-        const query = "DELETE FROM bill WHERE id = ?";
+        const { uuid } = req.params;
+        const query = "DELETE FROM bill WHERE uuid = ?";
 
-        const [results] = await pool.query(query, [id]);
+        const [results] = await pool.query(query, [uuid]);
 
         if (results.affectedRows === 0) {
             return res.status(404).json({ message: "Registro no encontrado" });
@@ -123,6 +123,7 @@ router.delete("/delete/:id", authenticateToken, async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 });
+
 
 // 📌 Exportamos el router en formato ESM
 export default router;

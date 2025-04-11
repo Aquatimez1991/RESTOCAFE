@@ -40,7 +40,9 @@ export class ConfirmationComponent implements OnInit {
   
     const types: { [key: string]: string } = {
       product: 'producto',
-      category: 'categoría'
+      category: 'categoría',
+      bill: 'factura'
+      
     };
   
     const translatedAction = actions[action] || action;

@@ -40,9 +40,12 @@
   }
   
   // Campos de formulario ocupan todo el ancho
-  mat-form-field {
-    width: 100%;
+  @media (max-width: 767px) {
+    mat-form-field {
+      width: 100%;
+    }
   }
+  
   
   // Tabla responsiva
   .responsive_table {
@@ -112,6 +115,18 @@
   
     &:hover {
       color: #b71c1c;
+    }
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: nowrap; // Mantiene todo en una sola fila
+    gap: 16px; // Espacio entre columnas
+    justify-content: space-between;
+  
+    mat-form-field {
+      flex: 1; // Cada uno ocupa el mismo ancho
+      min-width: 0; // Para evitar que rompa en pantallas pequeñas
     }
   }
   
