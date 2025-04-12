@@ -1,0 +1,129 @@
+:host {
+    display: block;
+    padding: 24px;
+  }
+  
+  // Estilo del título
+  mat-card:first-of-type {
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    padding: 16px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  // Filtro de búsqueda
+  mat-card:nth-of-type(2) {
+    padding: 16px;
+    background-color: #ffffff;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  
+  // Tabla responsiva
+  .responsive_table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+  
+  // Contenedor para scroll vertical
+  .table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  // Estilo de tabla
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 16px auto 0 auto;
+    display: block;
+  }
+  
+  // Encabezado de tabla
+  th {
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px;
+  }
+  
+  // Celdas
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    color: black;
+  }
+  
+  // Columnas específicas (puedes ajustar el ancho si deseas)
+  th:first-child,
+  td:first-child {
+    width: 20%;
+  }
+  
+  th:last-child,
+  td:last-child {
+    width: 25%;
+  }
+  
+  // Estilo para íconos de acción
+  .action-link button {
+    background-color: white;
+    border: 1px solid #1976d2;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 0 4px;
+  }
+  
+  .action-link mat-icon {
+    color: #1976d2;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  
+    &:hover {
+      color: #0d47a1;
+    }
+  }
+  
+  // Responsive en móviles
+  @media (max-width: 767px) {
+    mat-form-field {
+      width: 100%;
+    }
+  
+    .responsive_table {
+      overflow-x: auto;
+    }
+  
+    table {
+      font-size: 14px;
+    }
+  
+    th, td {
+      padding: 8px;
+    }
+  
+    .action-link button {
+      padding: 2px;
+    }
+  
+    .action-link mat-icon {
+      font-size: 20px;
+    }
+  }
+  
