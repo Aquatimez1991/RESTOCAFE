@@ -1,0 +1,140 @@
+:host {
+    display: block;
+    padding: 24px;
+  }
+  
+  // Aumenta el margen y relleno lateral para mejorar la separación
+  section {
+    margin-bottom: 20px;
+    margin-left: 0 auto;  // Margen izquierdo
+    margin-right: 0 auto;  // Margen derecho
+  }
+  
+  .custom-button {
+    background-color: #d32f2f;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #b71c1c;
+    }
+  }
+  
+  .custom-icon {
+    color: white; // o #fff si el fondo es rojo
+    font-size: 19px;
+    margin-right: 8px; // separa el icono del texto
+    vertical-align: middle;
+  }
+  
+  // Estilo base para cada tarjeta con relleno lateral
+  mat-card {
+    padding: 24px;
+    border-radius: 8px;
+    background-color: white;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 16px;  // Añadir espacio a la izquierda de cada tarjeta
+    margin-right: 16px;  // Añadir espacio a la derecha de cada tarjeta
+  }
+  
+  // Cabecera con título y botón
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  // Botón de agregar producto
+  .float-right {
+    background-color: #d32f2f;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+  }
+  
+  // Contenedor del filtro
+  .filter-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 16px auto;
+    padding: 0 16px;  // Relleno lateral
+  }
+  
+  // Campo de filtro
+  mat-form-field {
+    width: 100%;
+  }
+  
+  // Contenedor de tabla con márgenes
+  .responsive_table {
+    width: 70vw; // deja 5% libre a cada lado
+    margin: 0 auto;
+    padding: 0;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+  
+  // Tabla
+  table {
+    width: 100%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 16px auto 0 auto;  // Evita margen extra en la parte inferior
+  }
+  
+  th {
+    background-color: #f5f5f5;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px;
+  }
+  
+  th:first-child,
+  td:first-child {
+    width: 70%;
+  }
+  
+  th:last-child,
+  td:last-child {
+    width: 30%;
+  }
+  
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    color: black;
+  }
+  
+  .action-link button {
+    background-color: white;
+    border: 1px solid #d32f2f;
+    border-radius: 5px;
+    padding: 4px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  
+  .action-link mat-icon {
+    color: #d32f2f;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  

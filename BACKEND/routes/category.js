@@ -12,7 +12,7 @@ router.post("/add", authenticateToken, checkRole, async (req, res) => {
         const query = "INSERT INTO category (name) VALUES (?)";
         
         await pool.query(query, [name]);
-        return res.status(200).json({ message: "Category Added Successfully" });
+        return res.status(200).json({ message: "Categoría añadida con éxito" });
 
     } catch (err) {
         return res.status(500).json({ error: err.message });
@@ -40,9 +40,9 @@ router.patch("/update", authenticateToken, checkRole, async (req, res) => {
         const [results] = await pool.query(query, [name, id]);
 
         if (results.affectedRows === 0) {
-            return res.status(400).json({ message: "Category ID not found" });
+            return res.status(400).json({ message: "ID de categoría no encontrada" });
         }
-        return res.status(200).json({ message: "Category Updated Successfully" });
+        return res.status(200).json({ message: "Categoría actualizada con éxito" });
 
     } catch (err) {
         return res.status(500).json({ error: err.message });

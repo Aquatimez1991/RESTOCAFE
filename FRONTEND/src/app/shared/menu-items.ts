@@ -18,7 +18,7 @@ const MENUITEMS: Menu[] = [
 ];
 
 @Injectable({
-  providedIn: 'root' // Agregar esto para que Angular lo registre automáticamente
+  providedIn: 'root' 
 })
 export class MenuItems {
   getMenuitems(): Menu[] {

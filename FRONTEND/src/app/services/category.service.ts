@@ -11,24 +11,43 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) {}
 
   add(data: any) {
-    return this.httpClient.post(`${this.url}/category/add`, data, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     });
+  
+    return this.httpClient.post(`${this.url}/category/add`, data, { headers });
   }
 
   update(data: any) {
-    return this.httpClient.patch(`${this.url}/category/update`, data, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    });
-  }
-
-  getCategorys() {
-    const token = sessionStorage.getItem('token'); // Obtener el token desde sessionStorage
+    const token = sessionStorage.getItem('token'); 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // Agregar el token al header
+      'Authorization': `Bearer ${token}` 
+    });
+  
+    return this.httpClient.patch(`${this.url}/category/update`, data, { headers });
+  }
+  
+
+  getCategorys() {
+    const token = sessionStorage.getItem('token'); 
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
     });
 
+    return this.httpClient.get(`${this.url}/category/get`, { headers });
+  }
+
+
+  getFilteredCategories() {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
     return this.httpClient.get(`${this.url}/category/get`, { headers });
   }
 }

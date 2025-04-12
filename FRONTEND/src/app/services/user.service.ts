@@ -33,13 +33,16 @@ export class UserService {
     });
   }
   
-
   getUsers(): Observable<any> {
-    return this.http.get(`${this.apiURL}/user/get`);
+    return this.http.get(`${this.apiURL}/user/get`, {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
+    });
   }
 
   update(data: any): Observable<any> {
-    return this.http.patch(`${this.apiURL}/user/update`, data);
+    return this.http.patch(`${this.apiURL}/user/update`, data, {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
+    });
   }
 
   resetPassword(data: any): Observable<any> {

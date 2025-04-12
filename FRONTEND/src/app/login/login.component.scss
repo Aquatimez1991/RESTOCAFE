@@ -1,25 +1,23 @@
 :host {
-    $primary-color: #e53935; // Rojo intenso
+    $primary-color: #e53935; 
     $primary-dark: #b71c1c;
-    $background-dark: #161616; // Fondo negro
+    $background-dark: #161616; 
     $border-color: #fff;
-    $text-light: #d4d4d4; // Texto gris claro
+    $text-light: #d4d4d4; 
     $disabled-color: #bdbdbd;
     $success-color: #00c853;
     $error-color: #ff1744;
     $button-radius: 8px;
   
-    /* 🔹 Estilos generales del modal */
     .custom-dialog-content {
       display: flex;
       flex-direction: column;
       gap: 15px;
-      background-color: white; /* 🔹 Cambio el fondo a blanco */
+      background-color: white; 
       border-radius: 12px;
       padding: 20px;
     }
   
-    /* 🔹 Barra roja superior */
     .custom-toolbar {
       width: 100%;
       padding: 12px;
@@ -36,10 +34,9 @@
       font-size: 1.3rem;
       font-weight: bold;
       color: white;
-      flex-grow: 1; /* 🔹 Esto empuja el botón X a la derecha */
+      flex-grow: 1; 
     }
   
-    /* 🔹 Botón de cierre */
     .icon-close-button {
         position: absolute;
         top: 10px;
@@ -67,7 +64,6 @@
         }
     }
   
-    /* 🔹 Contenedor del formulario */
     .form-field {
       width: 100%;
   
@@ -90,7 +86,6 @@
       }
     }
   
-  /* 🔹 Estilos del input */
   input.mat-input-element, 
   .custom-input {
     color: rgb(100, 91, 91) !important;
@@ -102,10 +97,9 @@
       color: $text-light !important;
     }
   
-    /* 🔹 Botones */
     .buttons-container {
       display: flex;
-      justify-content: space-between; /* 🔹 Para que los botones estén bien alineados */
+      justify-content: space-between; 
       gap: 10px;
     }
   
@@ -120,7 +114,6 @@
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
   
-    /* 🔹 Botón "Iniciar Sesión" */
     .login-button {
         border-radius: 8px;
         font-weight: bold;
@@ -143,8 +136,7 @@
           cursor: not-allowed;
         }
     }
-  
-    /* 🔹 Botón "Cerrar" */
+
     .close-button {
         background-color: $primary-color;
         color: white;

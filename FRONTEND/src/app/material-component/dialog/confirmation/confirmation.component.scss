@@ -1,11 +1,10 @@
-// Asegurar que el fondo del componente sea blanco
+
 :host {
   display: block;
   width: 100%;
-  background-color: #ffffff; // Fondo blanco
+  background-color: #ffffff; 
 }
 
- /* 🔹 Botón de cierre (ícono en la esquina) */
  .mat-dialog-close {
   position: absolute;
   top: 10px;
@@ -33,9 +32,9 @@
     font-size: 1.5rem;
   }
 }
-// Barra de herramientas superior (rojo con texto blanco)
+
 mat-toolbar {
-  background-color: #f44336; // Rojo vibrante
+  background-color: #f44336; 
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -45,53 +44,48 @@ mat-toolbar {
   padding: 5px 10px;
 }
 
-// Contenido del diálogo
 mat-dialog-content {
   padding: 20px;
   background-color: #ffffff;
   text-align: center;
   
-
   h6 {
     font-size: 16px;
-    color: #333; // Texto oscuro
+    color: #333; 
     font-weight: bold;
   }
 }
 
-// Estilo de los botones
 mat-dialog-actions {
   display: flex;
   justify-content: center;
-  gap: 30px;  // Aumenta el espacio entre botones
+  gap: 30px;  
   padding: 50px 100px;
 
   button {
-    min-width: 120px; // Ajuste para mejor apariencia
+    min-width: 120px; 
     font-weight: bold;
     border-radius: 5px;
     padding: 12px 20px;
-    margin: 0 15px; // Agrega separación adicional entre botones
+    margin: 0 15px;
   }
 
-  // Estilo del botón "Yes" (Confirmar)
   button[color="primary"] {
-    background-color: #d32f2f; // Rojo oscuro
+    background-color: #d32f2f; 
     color: white;
     transition: 0.3s;
 
     &:hover {
-      background-color: #b71c1c; // Rojo más oscuro al pasar el mouse
+      background-color: #b71c1c; 
     }
   }
 
-  // Estilo del botón "No" (Cancelar)
   button[color="warn"] {
-    background-color: #f44336; // Rojo vibrante
+    background-color: #f44336; 
     color: white;
 
     &:hover {
-      background-color: #d32f2f; // Rojo oscuro al pasar el mouse
+      background-color: #d32f2f; 
     }
   }
 }

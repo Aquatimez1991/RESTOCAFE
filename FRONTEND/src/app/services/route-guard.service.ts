@@ -3,7 +3,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
-import { GlobalConstants } from '../shared/global-constants'; // ✅ Importamos GlobalConstants
+import { GlobalConstants } from '../shared/global-constants'; 
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class RouteGuardService implements CanActivate {
     private snackbarService: SnackbarService
   ) {}
 
-// ✅ Eliminamos el método isAuthenticated() y lo reemplazamos por el método canActivate()
+//  Eliminamos el método isAuthenticated() y lo reemplazamos por el método canActivate()
 /*    isAuthenticated(): boolean {
     const token = sessionStorage.getItem('token');
     if (!token) return false;
@@ -47,7 +47,7 @@ export class RouteGuardService implements CanActivate {
       const tokenPayload: any = jwtDecode(token);
       const roles = route.data['expectedRole'] || [];
 
-      // Convertimos los roles a minúsculas para evitar errores de comparación
+      
       const userRole = tokenPayload.role?.toLowerCase();
       const validRoles = roles.map((role: string) => role.toLowerCase());
 

@@ -3,7 +3,7 @@ import { AccordionLinkDirective } from './accordionlink.directive';
 
 @Directive({
   selector: '[appAccordionToggle]',
-  standalone: true, // 🚀 La hacemos standalone
+  standalone: true, 
 })
 export class AccordionAnchorDirective {
   constructor(private navlink: AccordionLinkDirective) {}

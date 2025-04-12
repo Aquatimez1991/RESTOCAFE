@@ -8,9 +8,9 @@ describe('ViewBillProductsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewBillProductsComponent, MatDialogModule], // ✅ Importamos MatDialogModule
+      imports: [ViewBillProductsComponent, MatDialogModule], 
       providers: [
-        { provide: MatDialogRef, useValue: {} } // ✅ Mockeamos MatDialogRef
+        { provide: MatDialogRef, useValue: {} } 
       ],
     }).compileComponents();
   });

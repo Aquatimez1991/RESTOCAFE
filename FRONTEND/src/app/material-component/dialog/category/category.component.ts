@@ -1,9 +1,21 @@
-import { Component, Inject, Signal, signal } from '@angular/core';
+import { Component, Inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryService } from '../../../services/category.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { GlobalConstants } from '../../../shared/global-constants';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
+import { CommonModule } from '@angular/common';
+import { update } from 'node_modules/cypress/types/lodash';
 
 @Component({
   selector: 'app-category',
@@ -11,17 +23,24 @@ import { GlobalConstants } from '../../../shared/global-constants';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
   imports: [
-    // Aquí puedes importar Angular Material y otros módulos necesarios
+   
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatToolbarModule,
+    ReactiveFormsModule, 
+    CommonModule 
   ]
 })
 export class CategoryComponent {
-
-  onAddCategory = signal(false);  // Signal en lugar de EventEmitter
-  onEditCategory = signal(false); // Signal en lugar de EventEmitter
+  onAddCategory = signal(false); 
+  onEditCategory = signal(false); 
   categoryForm: FormGroup;
-  dialogAction = signal<'Add' | 'Edit'>('Add'); // Signal con el estado de la acción
-  action = signal<'Add' | 'Update'>('Add'); // Label para UI
-  responseMessage = signal<string | null>(null); // Mensaje de respuesta
+  dialogAction = signal<'Add' | 'Edit'>('Add'); 
+  action = signal<'Add' | 'Update'>('Add'); 
+  responseMessage = signal<string | null>(null); 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -30,12 +49,11 @@ export class CategoryComponent {
     public dialogRef: MatDialogRef<CategoryComponent>,
     private snackbarService: SnackbarService
   ) {
-    // Inicializar el formulario reactivo
+   
     this.categoryForm = this.formBuilder.group({
-      name: [null, [Validators.required]]
+      name: [null, [Validators.required]],
     });
 
-    // Si el modal es de edición, precargar datos
     if (this.dialogData.action === 'Edit') {
       this.dialogAction.set('Edit');
       this.action.set('Update');
@@ -43,9 +61,6 @@ export class CategoryComponent {
     }
   }
 
-  /**
-   * Maneja la adición de una nueva categoría.
-   */
   add() {
     const data = { name: this.categoryForm.value.name };
 
@@ -58,17 +73,14 @@ export class CategoryComponent {
       },
       error: (error) => {
         this.handleError(error);
-      }
+      },
     });
   }
 
-  /**
-   * Maneja la edición de una categoría existente.
-   */
   edit() {
     const data = {
       id: this.dialogData.data.id,
-      name: this.categoryForm.value.name
+      name: this.categoryForm.value.name,
     };
 
     this.categoryService.update(data).subscribe({
@@ -80,13 +92,10 @@ export class CategoryComponent {
       },
       error: (error) => {
         this.handleError(error);
-      }
+      },
     });
   }
 
-  /**
-   * Maneja la presentación del formulario y decide si agregar o editar.
-   */
   handleSubmit() {
     if (this.dialogAction() === 'Edit') {
       this.edit();
@@ -95,14 +104,23 @@ export class CategoryComponent {
     }
   }
 
-  /**
-   * Maneja errores y muestra mensajes adecuados.
-   */
   private handleError(error: any) {
     this.dialogRef.close();
     console.error(error);
     const message = error.error?.message || GlobalConstants.genericError;
     this.responseMessage.set(message);
     this.snackbarService.openSnackBar(message, GlobalConstants.error);
+  }
+
+  translateAction(action: string): string {
+    const translations: { [key: string]: string } = {
+      add: 'Agregar',
+      edit: 'Editar',
+      delete: 'Eliminar',
+      save: 'Actualizar', 
+      update: 'Actualizar',
+    };
+  
+    return translations[action.toLowerCase()] || action;
   }
 }

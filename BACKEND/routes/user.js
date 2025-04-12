@@ -186,9 +186,9 @@ router.patch("/update", authenticateToken, checkRole, async (req, res) => {
   try {
     const [results] = await pool.query(query, [status, id]);
     if (results.affectedRows === 0) {
-      return res.status(404).json({ message: "User id does not exist" });
+      return res.status(404).json({ message: "El ID de usuario no existe" });
     }
-    return res.status(200).json({ message: "User Updated Successfully" });
+    return res.status(200).json({ message: "Usuario actualizada con éxito" });
   } catch (err) {
     return res.status(500).json(err);
   }

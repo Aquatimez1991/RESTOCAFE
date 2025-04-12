@@ -12,7 +12,7 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   getDetails(): Observable<any> {
-    const token = sessionStorage.getItem('token'); // Recupera el token desde el almacenamiento local
+    const token = sessionStorage.getItem('token'); 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     return this.http.get(`${this.apiURL}/dashboard/details`, { headers });

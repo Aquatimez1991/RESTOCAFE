@@ -29,25 +29,25 @@ html
       }
 
   body
-    h3 Café Management System
+    h3 Café Restobar Management System
 
     table
       tr
-        th(colspan="2") Customer Details
+        th(colspan="2") Detalles del cliente
       tr
-        td Name: #{name}
+        td Nombre: #{name}
         td Email: #{email}
       tr
-        td Contact Number: #{contactNumber}
-        td Payment Method: #{paymentMethod}
+        td Número de contacto: #{contactNumber}
+        td Método de pago: #{paymentMethod}
 
-    h3 Product Details:
+    h3 Detalles del producto:
     table
       tr
-        th Name
-        th Category
-        th Quantity
-        th Price
+        th Nombre
+        th Categoría
+        th Cantidad
+        th Precio
         th Sub Total
       each product in productDetails
         tr

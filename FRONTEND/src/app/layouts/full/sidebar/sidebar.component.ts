@@ -27,7 +27,6 @@ export class AppSidebarComponent implements OnDestroy {
 
   private _mobileQueryListener: () => void;
 
-  // ✅ Se inyecta correctamente `MenuItems`
   private changeDetectorRef = inject(ChangeDetectorRef);
   private media = inject(MediaMatcher);
   public MenuItems= inject(MenuItems);

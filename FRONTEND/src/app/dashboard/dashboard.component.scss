@@ -1,40 +1,38 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #ffffff;
   color: #ffffff;
   margin: 0;
   padding: 20px;
 }
 
-/* Ajuste del título Dashboard */
 mat-card.titulo {
-  background-color: #ff5252; /* Color de fondo del título */
-  color: white; /* Color del texto */
-  padding: 20px; /* Espaciado interno */
-  border-radius: 10px; /* Bordes redondeados */
-  text-align: center; /* Centrar el texto */
-  font-size: 2rem; /* Tamaño de fuente más grande */
-  margin-bottom: 20px; /* Espacio inferior */
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2); /* Sombra para el título */
-  width: 100%; /* Ancho completo */
-  max-width: 1200px; /* Ancho máximo */
-  margin: 0 auto; /* Centrar el título en la página */
-  display: flex; /* Flexbox para centrar el contenido */
-  justify-content: center; /* Centrar horizontalmente */
-  align-items:flex-start; /* Centrar verticalmente */
-  height: 100px; /* Altura del título */
-  font-weight: bold; /* Negrita para el texto */
-  text-transform: uppercase; /* Texto en mayúsculas */
-  letter-spacing: 1px; /* Espaciado entre letras */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra para el texto */
-  background-image: linear-gradient(to right, #ff5252, #ff1744); /* Degradado de color */
+  background-color: #ff5252;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(to right, #ff5252, #ff1744);
 }
 
-/* Contenedor principal */
 .page-content {
   display: flex;
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
+  justify-content: center;
+  align-items: center;
   width: 100%;
   min-height: 100vh;
 }
@@ -44,69 +42,62 @@ app-dashboard {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 1200px; /* Ancho máximo */
+  max-width: 1200px;
   width: 100%;
   padding: 20px;
 }
 
-/* Contenedor de tarjetas */
 .row {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 150px; /* Mayor separación entre tarjetas */
+  gap: 150px;
   flex-wrap: wrap;
   width: 100%;
   max-width: 1200px;
 }
 
-/* Columnas ajustables */
 .column {
   flex: 1;
-  min-width: 280px; /* Tarjetas más anchas */
-  max-width: 400px; /* Ajuste del tamaño máximo */
+  min-width: 280px;
+  max-width: 400px;
 }
 
-/* Estilos de las tarjetas */
 .card {
   background: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px; /* Aumentamos el padding */
+  padding: 30px;
   text-align: center;
   transition: transform 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%; /* Ocupar todo el espacio disponible en la columna */
-  margin: 20px auto; /* Margen más uniforme */
+  width: 100%;
+  margin: 20px auto;
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
 
-/* Contenedor dentro de cada tarjeta */
 .container {
   padding: 15px;
 }
 
-/* Títulos dentro de las tarjetas */
 .title {
   font-size: 1.5rem;
   margin: 10px 0;
   color: #000000;
 }
 
-/* Número grande en las tarjetas */
 h1 {
-  font-size: 3rem; /* Aumentado */
+  font-size: 3rem;
   font-weight: bold;
   color: #000000;
 }
 
-/* Botón dentro de las tarjetas */
 .button {
   background-color: #ff5252;
   color: white;
