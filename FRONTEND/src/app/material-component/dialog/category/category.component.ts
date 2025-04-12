@@ -5,7 +5,6 @@ import { CategoryService } from '../../../services/category.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { GlobalConstants } from '../../../shared/global-constants';
 
-// Importaciones de Angular Material necesarias para el diálogo y formulario
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 
-// Importar CommonModule para las directivas como *ngIf
+
 import { CommonModule } from '@angular/common';
 import { update } from 'node_modules/cypress/types/lodash';
 
@@ -24,24 +23,24 @@ import { update } from 'node_modules/cypress/types/lodash';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
   imports: [
-    // Importar los módulos de Angular Material que se utilizan en el componente
+   
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    ReactiveFormsModule, // Para formularios reactivos
-    CommonModule // Necesario para usar *ngIf
+    ReactiveFormsModule, 
+    CommonModule 
   ]
 })
 export class CategoryComponent {
-  onAddCategory = signal(false); // Signal en lugar de EventEmitter
-  onEditCategory = signal(false); // Signal en lugar de EventEmitter
+  onAddCategory = signal(false); 
+  onEditCategory = signal(false); 
   categoryForm: FormGroup;
-  dialogAction = signal<'Add' | 'Edit'>('Add'); // Signal con el estado de la acción
-  action = signal<'Add' | 'Update'>('Add'); // Label para UI
-  responseMessage = signal<string | null>(null); // Mensaje de respuesta
+  dialogAction = signal<'Add' | 'Edit'>('Add'); 
+  action = signal<'Add' | 'Update'>('Add'); 
+  responseMessage = signal<string | null>(null); 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -50,12 +49,11 @@ export class CategoryComponent {
     public dialogRef: MatDialogRef<CategoryComponent>,
     private snackbarService: SnackbarService
   ) {
-    // Inicializar el formulario reactivo
+   
     this.categoryForm = this.formBuilder.group({
       name: [null, [Validators.required]],
     });
 
-    // Si el modal es de edición, precargar datos
     if (this.dialogData.action === 'Edit') {
       this.dialogAction.set('Edit');
       this.action.set('Update');
@@ -125,6 +123,4 @@ export class CategoryComponent {
   
     return translations[action.toLowerCase()] || action;
   }
-  
-  
 }

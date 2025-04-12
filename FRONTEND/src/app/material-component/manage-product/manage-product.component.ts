@@ -42,7 +42,6 @@ export class ManageProductComponent {
   dataSource = signal<any>(null);
   responseMessage = signal<string | null>(null);
 
-  // Inyección de dependencias moderna
   private productService = inject(ProductService);
   private ngxService = inject(NgxUiLoaderService);
   private dialog = inject(MatDialog);
@@ -87,7 +86,6 @@ export class ManageProductComponent {
     }
   }
   
-
   handleAddAction() {
     this.openProductDialog('Add');
   }

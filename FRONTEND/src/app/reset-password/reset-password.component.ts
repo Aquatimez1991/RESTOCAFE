@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxUiLoaderModule, NgxUiLoaderService } from 'ngx-ui-loader'; // ✅ Importar módulo y servicio
+import { NgxUiLoaderModule, NgxUiLoaderService } from 'ngx-ui-loader'; 
 
 @Component({
   selector: 'app-reset-password',
@@ -24,7 +24,7 @@ export class ResetPasswordComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router,
-    private ngxLoader: NgxUiLoaderService // 🔹 Inyección del servicio de loader
+    private ngxLoader: NgxUiLoaderService 
   ) {}
 
   ngOnInit(): void {
@@ -45,18 +45,18 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
 
-    this.ngxLoader.start(); // 🔄 Iniciar loader antes de la solicitud
+    this.ngxLoader.start(); 
 
     this.userService.resetPassword({ token: this.token, newPassword })
       .subscribe(
         (response: any) => {
           this.successMessage = response.message;
-          this.ngxLoader.stop(); // ⏹️ Detener loader al recibir la respuesta
+          this.ngxLoader.stop(); 
           setTimeout(() => this.router.navigate(['/login']), 4200);
         },
         (error) => {
           this.errorMessage = error.error.message || 'Error al actualizar la contraseña.';
-          this.ngxLoader.stop(); // ⏹️ Detener loader en caso de error
+          this.ngxLoader.stop(); 
         }
       );
   }

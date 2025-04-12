@@ -6,9 +6,9 @@ import { SnackbarService } from "../services/snackbar.service";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 import { MatDialogRef } from "@angular/material/dialog";
 import { GlobalConstants } from "../shared/global-constants";
-import { MatIconModule } from '@angular/material/icon'; // Necesario para mat-icon
-import { MatDialogModule } from '@angular/material/dialog'; // Necesario para mat-dialog
-import { MatToolbarModule } from '@angular/material/toolbar'; // Necesario para mat-toolbar
+import { MatIconModule } from '@angular/material/icon'; 
+import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,10 +22,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./signup.component.scss'],
   standalone: true,
   imports: [
-    MatFormFieldModule, // Importa MatFormFieldModule para mat-error
-    MatInputModule,     // Importa MatInputModule para input matInput
-    MatButtonModule,    // Importa MatButtonModule si usas botones Material
-    ReactiveFormsModule, // Importa soporte para formularios reactivos
+    MatFormFieldModule, 
+    MatInputModule,     
+    MatButtonModule,    
+    ReactiveFormsModule, 
     MatIconModule,
     MatDialogModule,
     MatToolbarModule,
@@ -35,7 +35,7 @@ import { CommonModule } from '@angular/common';
 export class SignupComponent implements OnInit {
   password = true;
   confirmPassword = true;
-  signupForm: any = FormGroup; // Tipado correcto para formularios reactivos
+  signupForm: any = FormGroup; 
   responseMessage: any;
 
   constructor(
@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService, // El servicio del loader
+    private ngxService: NgxUiLoaderService, 
     public dialogRef: MatDialogRef<SignupComponent> 
   ) {}
 
@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
   }
 
   handleSingUpSubmitButton() {
-    this.ngxService.start(); // Muestra el loader antes de enviar el formulario
+    this.ngxService.start(); 
 
     const formData = this.signupForm.value;
     const data = {
@@ -74,14 +74,14 @@ export class SignupComponent implements OnInit {
 
     this.userService.signup(data).subscribe(
       (response: any) => {
-        this.ngxService.stop(); // Oculta el loader al terminar
+        this.ngxService.stop(); 
         this.dialogRef.close();
         this.responseMessage = response?.message;
         this.snackbarService.openSnackBar(this.responseMessage, "");
         this.router.navigate(['/']);
       },
       (error) => {
-        this.ngxService.stop(); // Asegúrate de detener el loader incluso en caso de error
+        this.ngxService.stop();
         this.responseMessage = error.error?.message || GlobalConstants.genericError;
         this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
       }

@@ -6,11 +6,11 @@ import { RouteGuardService } from "./services/route-guard.service";
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent // Ruta por defecto
+    component: HomeComponent 
   },
   {
     path: 'cafe',
-    component: FullComponent, // Contenedor principal para rutas internas
+    component: FullComponent, 
     children: [
       {
         path: '',
@@ -20,14 +20,14 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => import('./dashboard/dashboard.component')
-          .then(m => m.DashboardComponent),  // ✅ Carga de componente standalone
+          .then(m => m.DashboardComponent),  
         canActivate: [RouteGuardService],
         data: { expectedRole: ['admin', 'user'] }
       },
       {
         path: 'category',
         loadComponent: () => import('./material-component/manage-category/manage-category.component')
-          .then(m => m.ManageCategoryComponent), // ✅ Carga de componente standalone
+          .then(m => m.ManageCategoryComponent), 
         canActivate: [RouteGuardService],
         data: { expectedRole: ['admin'] }
       },
@@ -63,6 +63,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '' // Redirige a HomeComponent si la ruta no existe
+    redirectTo: '' 
   }
 ];

@@ -9,7 +9,7 @@ import { filter } from 'rxjs/operators';
 
 @Directive({
   selector: '[appAccordion]',
-  standalone: true, // 🚀 Hacemos la directiva standalone
+  standalone: true, 
 })
 export class AccordionDirective implements AfterContentChecked {
   protected navlinks: Array<AccordionLinkDirective> = [];

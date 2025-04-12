@@ -19,18 +19,16 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
-  // --- Servicios ---
+
   private ngxService = inject(NgxUiLoaderService);
   private userService = inject(UserService);
   private snackbarService = inject(SnackbarService);
-
-  // --- Señales y propiedades ---
+ 
   displayedColumns: string[] = ['name', 'email', 'contactNumber', 'status'];
   private _users = signal<any[]>([]);
   filter = signal<string>('');
   responseMessage = signal<string>('');
 
-  // Computed para aplicar filtro dinámico
   filteredUsers = computed(() => {
     const term = this.filter().trim().toLowerCase();
     return this._users().filter(user =>

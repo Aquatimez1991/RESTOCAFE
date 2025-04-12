@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedLoaderModule } from './shared/loader/shared-loader.module';
-import { UserService } from './services/user.service'; // ✅ Importar UserService
-import { Router } from '@angular/router'; // ✅ Para manejar navegación
+import { UserService } from './services/user.service'; 
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
-  standalone: true, // ✅ Sigue siendo Standalone
+  standalone: true, 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [RouterModule, SharedLoaderModule]
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
         () => {
           console.error('Sesión inválida o expirada');
           sessionStorage.clear();
-          this.router.navigate(['/']); // Redirigir al home si no hay sesión válida
+          this.router.navigate(['/']); 
         }
       );
     }

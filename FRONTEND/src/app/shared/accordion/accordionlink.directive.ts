@@ -9,7 +9,7 @@ import { AccordionDirective } from './accordion.directive';
 
 @Directive({
   selector: '[appAccordionLink]',
-  standalone: true, // 🚀 La hacemos standalone
+  standalone: true, 
 })
 export class AccordionLinkDirective implements OnInit, OnDestroy {
   @Input()

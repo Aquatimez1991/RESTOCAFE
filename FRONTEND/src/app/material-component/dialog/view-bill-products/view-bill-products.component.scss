@@ -1,54 +1,41 @@
-.mat-toolbar {
-    margin: -24px;
-    margin-bottom: 10px;
-    width: auto;
-}
-
-.title-center {
+.pdf-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .spacer {
     flex: 1 1 auto;
-    text-align: center;
-}
-
-mat-form-field {
-    padding: 5px;
-}
-
-.float-right {
-    float: right;
-}
-
-mat-card {
-    padding: 20px;
-}
-
-table {
-    width: 100%;
-}
-
-/* Tabla de clientes */
-#customers {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#customers td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#customers tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#customers tr:hover {
-    background-color: #ddd;
-}
-
-#customers th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #04AA6D;
-    color: white;
-}
+  }
+  
+  .pdf-dialog-content {
+    height: calc(100vh - 64px); 
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+  
+    .pdf-viewer {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  
+  ::ng-deep ngx-extended-pdf-viewer {
+    background-color: transparent !important;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  ::ng-deep .ng2-pdf-viewer-container,
+  ::ng-deep .pdfViewer {
+    background-color: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .mat-dialog-container {
+    padding: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+  

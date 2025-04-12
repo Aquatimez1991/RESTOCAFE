@@ -6,7 +6,6 @@ import { CategoryService } from '../../../services/category.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { GlobalConstants } from '../../../shared/global-constants';
 
-// Angular Material + core
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,7 +34,7 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class ProductComponent {
-  // Signals
+
   onAddProduct = signal(false);
   onEditProduct = signal(false);
   dialogAction = signal<'Add' | 'Edit'>('Add');
@@ -53,7 +52,7 @@ export class ProductComponent {
     private categoryService: CategoryService,
     private snackbarService: SnackbarService
   ) {
-    // Crear formulario
+ 
     this.productForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       categoryId: [null, Validators.required],
@@ -61,14 +60,12 @@ export class ProductComponent {
       description: [null, Validators.required]
     });
 
-    // Detectar si es edición
     if (this.dialogData.action === 'Edit') {
       this.dialogAction.set('Edit');
       this.action.set('Update');
       this.productForm.patchValue(this.dialogData.data);
     }
 
-    // Cargar categorías
     this.loadCategories();
   }
 
@@ -126,5 +123,16 @@ export class ProductComponent {
     const message = error.error?.message || GlobalConstants.genericError;
     this.responseMessage.set(message);
     this.snackbarService.openSnackBar(message, GlobalConstants.error);
+  }
+
+  translatedAction(): string {
+    const translations: { [key: string]: string } = {
+      Add: 'Agregar',
+      Edit: 'Editar',
+      Delete: 'Eliminar',
+      Save: 'Guardar',
+      Update: 'Actualizar',
+    };
+    return translations[this.action()] || this.action();
   }
 }

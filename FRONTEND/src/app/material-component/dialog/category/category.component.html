@@ -1,4 +1,4 @@
-<!-- Toolbar del diálogo -->
+
 <mat-toolbar color="primary">
     <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
       <span>{{ translateAction(dialogAction()) }} Categoría</span>
@@ -8,7 +8,6 @@
     </mat-toolbar-row>
   </mat-toolbar>
   
-  <!-- Contenido principal del formulario -->
   <mat-dialog-content class="mat-typography">
     <form [formGroup]="categoryForm">
       <div fxLayout="column" fxLayoutGap="16px">
@@ -23,7 +22,6 @@
     </form>
   </mat-dialog-content>
   
-  <!-- Acciones -->
   <mat-dialog-actions align="end">
     <button mat-raised-button color="primary" (click)="handleSubmit()"
             [disabled]="!categoryForm.valid || !categoryForm.dirty">

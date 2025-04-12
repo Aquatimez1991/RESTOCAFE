@@ -95,16 +95,32 @@ export class ViewBillComponent {
   
     dataSource.filter = filterValue;
   }
-  
 
   handleViewAction(data: any) {
-    const dialogConfig: MatDialogConfig = {
-      width: '100%',
-      data: { data }
-    };
-
-    const dialogRef = this.dialog.open(ViewBillProductsComponent, dialogConfig);
-    this.router.events.subscribe(() => dialogRef.close());
+    this.ngxService.start();
+  
+    this.billService.getPdf({ uuid: data.uuid }).subscribe({
+      next: (response: Blob) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(blob);
+  
+        const dialogConfig: MatDialogConfig = {
+          width: '80%',
+          height: '90%',
+          data: {
+            pdfUrl 
+          }
+        };
+  
+        const dialogRef = this.dialog.open(ViewBillProductsComponent, dialogConfig);
+        this.router.events.subscribe(() => dialogRef.close());
+        this.ngxService.stop();
+      },
+      error: (err) => {
+        this.ngxService.stop();
+        this.handleError(err);
+      }
+    });
   }
 
   handleDeleteAction(data: any) {

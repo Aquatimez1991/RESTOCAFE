@@ -1,8 +1,7 @@
 <div class="page-content">
-  <!-- Contenedor de las tres secciones en una fila -->
+ 
   <div class="row">
     
-    <!-- Sección 1: Gestionar Categoría -->
     <section class="col">
       <mat-card>
         <div class="card-header">
@@ -14,7 +13,6 @@
       </mat-card>
     </section>
 
-    <!-- Sección 2: Filtro -->
     <section class="col">
       <mat-card>
         <mat-form-field appearance="fill">
@@ -24,19 +22,16 @@
       </mat-card>
     </section>
 
-    <!-- Sección 3: Tabla -->
     <section class="col">
       <mat-card>
         <div class="responsive_table">
           <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
 
-            <!-- Nombre -->
             <ng-container matColumnDef="name" class="name-column">
               <th mat-header-cell *matHeaderCellDef>Nombre</th>
               <td mat-cell *matCellDef="let element">{{ element.name }}</td>
             </ng-container>
 
-            <!-- Acción -->
             <ng-container matColumnDef="edit" class="action-column">
               <th mat-header-cell *matHeaderCellDef>Acción</th>
               <td mat-cell *matCellDef="let element" class="action-link">
@@ -46,7 +41,6 @@
               </td>
             </ng-container>
 
-            <!-- Header y filas -->
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>

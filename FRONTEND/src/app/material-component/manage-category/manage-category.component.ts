@@ -24,10 +24,10 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ManageCategoryComponent {
   displayedColumns: string[] = ['name', 'edit'];
-  dataSource = signal<any>(null); // Usamos signal para reactividad
+  dataSource = signal<any>(null); 
   responseMessage = signal<string | null>(null);
 
-  // Inyección de dependencias usando `inject`
+
   private categoryService = inject(CategoryService);
   private ngxService = inject(NgxUiLoaderService);
   private dialog = inject(MatDialog);
@@ -35,13 +35,10 @@ export class ManageCategoryComponent {
   private router = inject(Router);
 
   constructor() {
-    this.ngxService.start(); // Iniciar loader al crear el componente
-    this.tableData(); // Cargar categorías
+    this.ngxService.start(); 
+    this.tableData();
   }
 
-  /**
-   * Obtiene las categorías del backend y actualiza la tabla.
-   */
   tableData() {
     this.categoryService.getCategorys().subscribe({
       next: (response:any) => {
@@ -56,44 +53,29 @@ export class ManageCategoryComponent {
     });
   }
 
-  /**
-   * Filtra la tabla en función del texto ingresado en el input.
-   */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     const ds = this.dataSource();
   
     if (ds) {
-      // Definir cómo filtrar (por ejemplo, filtrar por name)
+      
       ds.filterPredicate = (data: any, filter: string): boolean => {
         const str = `${data.name} ${data.description}`.toLowerCase();
         return str.includes(filter);
       };
       
-  
       ds.filter = filterValue;
     }
   }
   
-
-  /**
-   * Abre el diálogo para agregar una nueva categoría.
-   */
   handleAddAction() {
     this.openCategoryDialog('Add');
   }
   
-
-  /**
-   * Abre el diálogo para editar una categoría existente.
-   */
   handleEditAction(values: any) {
     this.openCategoryDialog('Edit', values);
   }
 
-  /**
-   * Método reutilizable para abrir el diálogo de categorías (Agregar/Editar).
-   */
   private openCategoryDialog(action: 'Add' | 'Edit', data?: any) {
     const dialogConfig: MatDialogConfig = {
       width: '850px',
@@ -104,13 +86,12 @@ export class ManageCategoryComponent {
   
     this.router.events.subscribe(() => dialogRef.close());
   
-    // ✅ Esperar a que se cierre el diálogo y recargar si hubo cambio
     dialogRef.afterClosed().subscribe(() => {
       const added = dialogRef.componentInstance.onAddCategory();
       const edited = dialogRef.componentInstance.onEditCategory();
   
       if (added || edited) {
-        this.tableData(); // 🔄 Recargar tabla
+        this.tableData(); 
       }
     });
   }

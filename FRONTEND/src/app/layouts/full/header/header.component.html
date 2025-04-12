@@ -1,11 +1,9 @@
-<!-- Contenedor del botón de perfil -->
 
 <div class="profile-container">
   <button [matMenuTriggerFor]="profile" mat-icon-button class="profile-button">
     <mat-icon class="profile-icon">account_circle</mat-icon>
   </button>
 
-  <!-- Menú desplegable -->
   <mat-menu #profile="matMenu" class="profile-menu">
     <button mat-menu-item class="menu-item" (click)="changePassword()">
       <mat-icon class="menu-icon">password</mat-icon>

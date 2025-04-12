@@ -36,15 +36,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   ]
 })
 export class ManageOrderComponent {
-  // --- Services ---
+  
   private formBuilder = inject(FormBuilder);
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
   private snackbarService = inject(SnackbarService);
   private billService = inject(BillService);
   private ngxService = inject(NgxUiLoaderService);
-
-  // --- Signals ---
+ 
   categories = signal<any[]>([]);
   products = signal<any[]>([]);
   displayedColumns: string[] = ['name', 'category', 'price', 'quantity', 'total', 'edit'];
@@ -60,12 +59,10 @@ export class ManageOrderComponent {
     paymentMethod: [null, [Validators.required]],
     product: [null, [Validators.required]],
     category: [null, [Validators.required]],
-    quantity: [1, [Validators.required]],  // ← cantidad ahora empieza en 1
-    price: [0, [Validators.required]],     // ← precio ahora empieza en 0
+    quantity: [1, [Validators.required]],  
+    price: [0, [Validators.required]],     
     total: [0, [Validators.required]]
   });
-
-
 
   constructor() {
     this.ngxService.start();
@@ -126,28 +123,25 @@ export class ManageOrderComponent {
     
   }
   
-
   setQuantity(value: any) {
-    // Retrieve the current value of the quantity control from the form
+    
     let temp = this.manageOrderForm.controls['quantity'].value;
 
-    // Check if the entered quantity is greater than 0
     if (temp > 0) {
-      // Calculate and update the total based on the quantity and price
+      
       this.manageOrderForm.controls['total'].setValue(
         this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value
       );
     } else if (temp != '') {
-      // If the quantity is not valid (e.g., negative or zero), reset it to 1
+      
       this.manageOrderForm.controls['quantity'].setValue('1');
-      // Recalculate and update the total based on the reset quantity and price
+      
       this.manageOrderForm.controls['total'].setValue(
         this.manageOrderForm.controls['quantity'].value * this.manageOrderForm.controls['price'].value
       );
     }
   }
   
-
   validateProductAdd(): boolean {
     const { total, quantity } = this.manageOrderForm.value;
     return total === 0 || total === null || quantity! <= 0;
@@ -161,7 +155,7 @@ export class ManageOrderComponent {
   add() {
     const formData = this.manageOrderForm.value;
     
-    console.log('Form Data:', formData); // Depuración para verificar los valores
+    console.log('Form Data:', formData); 
     
     const productName = this.dataSource().find((p: { id: number; }) => p.id === formData.product.id);
     if (productName === undefined) {
@@ -233,8 +227,6 @@ export class ManageOrderComponent {
       }
     });
   }
-  
-  
 
   downloadFile(uuid: string, name: string) {
     this.billService.getPdf({ uuid }).subscribe({

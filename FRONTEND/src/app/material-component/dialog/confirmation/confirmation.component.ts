@@ -51,7 +51,6 @@ export class ConfirmationComponent implements OnInit {
     return `¿Estás segura de que quieres ${translatedAction} el ${translatedType} ${itemName}?`;
   }
   
-
   ngOnInit(): void {
     if (this.dialogData?.confirmation) {
       this.details = this.dialogData;

@@ -9,32 +9,30 @@ mat-list-item {
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
   
-
   &:hover {
-    background-color: #f5f5f5; // Color de hover más claro
+    background-color: #f5f5f5; 
   }
 
   &.selected {
-    background-color: #ff5733; /* Color de selección */
-    color: white; /* Texto en blanco cuando está seleccionado */
-    border-radius: 0; /* Eliminar esquinas redondeadas */
+    background-color: #ff5733; 
+    color: white; 
+    border-radius: 0; 
   
     mat-icon {
-      color: white; /* Icono blanco cuando está seleccionado */
+      color: white; 
     }
   }
   
-
   mat-icon {
-    margin-right: 10px; // Espaciado entre icono y texto
-    color: #000; // Iconos negros por defecto
+    margin-right: 10px; 
+    color: #000; 
   }
 
   a {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: black; // Texto negro por defecto
+    color: black; 
     width: 100%;
   }
 }
