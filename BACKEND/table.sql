@@ -6,11 +6,12 @@ create table user(
     password varchar(250),
     status varchar(20),
     role varchar(20),
+    reset_token varchar(255),
     UNIQUE (email)
 );
 
 
-insert into user(name, contactNumber,email,password,status,role) values('Admin','1231231231','admin@gmail.com','admin','true','admin');
+insert into user(name, contactNumber,email,password,status,role) values('Admin','12345678','admin@gmail.com','admin','true','admin');
 
 create table category(
     id int NOT NULL AUTO_INCREMENT,
